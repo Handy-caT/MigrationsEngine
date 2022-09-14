@@ -1,4 +1,5 @@
-from schema.exceptions.invalid_column_exception import InvalidKeyInColumnException
+from schema.exceptions.column_not_found_exception import ColumnNotFoundException
+from schema.exceptions.invalid_column_exception import InvalidColumnException
 
 
 class Table:
@@ -6,7 +7,7 @@ class Table:
         for column in self.columns:
             if column.key == 'PRI':
                 if not column.not_null:
-                    raise InvalidKeyInColumnException(column.name)
+                    raise InvalidColumnException(f'Primary key in {column.name} must be not null')
                 else:
                     self._primary_key.append(column.name)
 
@@ -50,3 +51,17 @@ class Table:
     def add_column(self, column):
         self.columns.append(column)
         self._check_columns_unique()
+
+    def remove_column(self, column_name):
+        deleted = False
+
+        for column in self.columns:
+            if column.name == column_name:
+                if column.key == 'PRI' and len(self._primary_key) == 1:
+                    raise InvalidColumnException(f'Cannot remove only primary key in {column_name}')
+                self.columns.remove(column)
+                deleted = True
+                break
+
+        if not deleted:
+            raise ColumnNotFoundException(column_name)

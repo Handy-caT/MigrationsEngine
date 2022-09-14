@@ -1,7 +1,8 @@
 import pytest
 
 from schema.column import Column
-from schema.exceptions.invalid_column_exception import InvalidKeyInColumnException
+from schema.exceptions.column_not_found_exception import ColumnNotFoundException
+from schema.exceptions.invalid_column_exception import InvalidColumnException
 from schema.table import Table
 
 
@@ -36,7 +37,7 @@ def test_table_model_init_with_wrong_column(columns):
     columns_arr = columns
     columns_arr[0].not_null = False
 
-    with pytest.raises(InvalidKeyInColumnException):
+    with pytest.raises(InvalidColumnException):
         Table(name, columns_arr)
 
 
@@ -91,3 +92,36 @@ def test_table_model_add_not_unique_column(columns):
     table.add_column(column)
 
     assert len(table.columns) == len(columns_arr)
+
+
+def test_table_model_remove_column(columns):
+    name = 'Users'
+    columns_arr = columns
+    column_name = 'name'
+
+    table = Table(name, columns_arr)
+    table.remove_column(column_name)
+
+    assert len(table.columns) == len(columns_arr) - 1
+
+
+def test_table_model_not_remove_primary_key(columns):
+    name = 'Users'
+    columns_arr = columns
+    column_name = 'id'
+
+    table = Table(name, columns_arr)
+
+    with pytest.raises(InvalidColumnException):
+        table.remove_column(column_name)
+
+
+def test_table_model_remove_not_found(columns):
+    name = 'Users'
+    columns_arr = columns
+    column_name = 'password'
+
+    table = Table(name, columns_arr)
+
+    with pytest.raises(ColumnNotFoundException):
+        table.remove_column(column_name)
