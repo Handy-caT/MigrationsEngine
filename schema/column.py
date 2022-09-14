@@ -17,3 +17,4 @@ class Column:
             adict['Default'],
             adict['Extra']
         )
+
