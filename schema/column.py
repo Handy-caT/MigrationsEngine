@@ -1,8 +1,8 @@
 class Column:
-    def __init__(self, name, column_type, null, key, default, extra):
+    def __init__(self, name, column_type, not_null, key, default, extra):
         self.name = name
         self.column_type = column_type.lower()
-        self.null = null
+        self.not_null = not_null
         self.key = key
         self.default = default
         self.extra = extra
@@ -12,7 +12,7 @@ class Column:
         return Column(
             adict['Name'],
             adict['Type'],
-            adict['Null'],
+            adict['NotNull'],
             adict['Key'],
             adict['Default'],
             adict['Extra']
