@@ -1,3 +1,6 @@
+from typing import List
+
+from schema.column import Column
 from schema.exceptions.column_not_found_exception import ColumnNotFoundException
 from schema.exceptions.invalid_column_exception import InvalidColumnException
 
@@ -22,7 +25,7 @@ class Table:
 
         self.columns = columns
 
-    def __init__(self, name, columns):
+    def __init__(self, name: str, columns: List[Column]):
         self.name = name
         self.columns = columns
         self._primary_key = []
@@ -36,10 +39,10 @@ class Table:
             columns=adict['Columns']
         )
 
-    def get_primary_key(self):
+    def get_primary_key(self) -> List[str]:
         return self._primary_key
 
-    def set_primary_key(self, primary_key):
+    def set_primary_key(self, primary_key: List[str]):
         for column_name in primary_key:
             for column in self.columns:
                 if column.name == column_name:
@@ -48,11 +51,11 @@ class Table:
 
         self._primary_key = primary_key
 
-    def add_column(self, column):
+    def add_column(self, column: Column):
         self.columns.append(column)
         self._check_columns_unique()
 
-    def remove_column(self, column_name):
+    def remove_column(self, column_name: str):
         deleted = False
 
         for column in self.columns:
