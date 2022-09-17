@@ -1,6 +1,7 @@
 import pytest
 
-from migration.table_plan_generator import TablePlanGenerator
+from migration.column_plan_builder import ColumnPlanBuilder
+from migration.table_plan_builder import TablePlanBuilder
 from schema.column import Column
 from schema.table import Table
 
@@ -52,4 +53,9 @@ def tables(columns):
 
 @pytest.fixture(scope='function')
 def table_plan_generator(columns):
-    return TablePlanGenerator('test', columns)
+    return TablePlanBuilder('test', columns)
+
+
+@pytest.fixture(scope='function')
+def column_plan_generator():
+    return ColumnPlanBuilder(column_name='id', table_name='test')
