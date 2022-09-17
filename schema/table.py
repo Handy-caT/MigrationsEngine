@@ -1,8 +1,7 @@
 from typing import List
 
 from schema.column import Column
-from schema.exceptions.column_not_found_exception import ColumnNotFoundException
-from schema.exceptions.invalid_column_exception import InvalidColumnException
+from schema.exceptions import InvalidColumnException, ColumnNotFoundException
 
 
 class Table:
@@ -11,8 +10,8 @@ class Table:
             if column.key == 'PRI':
                 if not column.not_null:
                     raise InvalidColumnException(f'Primary key in {column.name} must be not null')
-                else:
-                    self._primary_key.append(column.name)
+
+                self._primary_key.append(column.name)
 
     def _check_columns_unique(self):
         names = []

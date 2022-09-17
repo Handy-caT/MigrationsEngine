@@ -1,5 +1,6 @@
 import pytest
 
+from migration.table_plan_generator import TablePlanGenerator
 from schema.column import Column
 from schema.table import Table
 
@@ -47,3 +48,8 @@ def tables(columns):
     )
 
     return [table1, table2]
+
+
+@pytest.fixture(scope='function')
+def table_plan_generator(columns):
+    return TablePlanGenerator('test', columns)

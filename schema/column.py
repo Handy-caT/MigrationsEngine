@@ -1,5 +1,9 @@
+from typing import Optional
+
+
 class Column:
-    def __init__(self, name: str, column_type: str, not_null: bool, key: str, default: str, extra: str):
+    def __init__(self, name: str, column_type: str, not_null: bool, key: Optional[str],
+                 default: Optional[str], extra: Optional[str]):
         self.name = name
         self.column_type = column_type.lower()
         self.not_null = not_null
@@ -17,4 +21,3 @@ class Column:
             adict['Default'],
             adict['Extra']
         )
-

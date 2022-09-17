@@ -1,7 +1,7 @@
 import pytest
 
 from schema.database import Database
-from schema.exceptions.invalid_table_exception import InvalidTableException
+from schema.exceptions import InvalidTableException
 from schema.table import Table
 
 

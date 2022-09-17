@@ -1,8 +1,7 @@
 import pytest
 
 from schema.column import Column
-from schema.exceptions.column_not_found_exception import ColumnNotFoundException
-from schema.exceptions.invalid_column_exception import InvalidColumnException
+from schema.exceptions import InvalidColumnException, ColumnNotFoundException
 from schema.table import Table
 
 

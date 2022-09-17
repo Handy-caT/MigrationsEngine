@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 pytest = "*"
 sqlalchemy = "*"
+pylint = "*"
+flake8 = "*"
 
 [dev-packages]
 
