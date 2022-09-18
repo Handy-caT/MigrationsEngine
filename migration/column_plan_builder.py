@@ -39,3 +39,11 @@ class ColumnPlanBuilder:
         self._plan['ForeignKey'] = {
             'Action': 'Drop'
         }
+
+    def drop_not_null(self):
+        self._plan['NotNull'] = 'Drop'
+
+    def drop_default(self):
+        self._plan['Default'] = {
+            'Action': 'Drop'
+        }

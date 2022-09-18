@@ -90,3 +90,23 @@ def test_column_plan_drop_foreign_key(column_plan_generator):
             'Action': 'Drop'
         }
     }
+
+
+def test_column_plan_drop_not_null(column_plan_generator):
+    column_plan_generator.drop_not_null()
+
+    assert column_plan_generator.get_plan() == {
+        'ColumnName': 'id',
+        'NotNull': 'Drop'
+    }
+
+
+def test_column_plan_drop_default(column_plan_generator):
+    column_plan_generator.drop_default()
+
+    assert column_plan_generator.get_plan() == {
+        'ColumnName': 'id',
+        'Default': {
+            'Action': 'Drop'
+        }
+    }

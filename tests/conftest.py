@@ -37,6 +37,18 @@ def columns():
 
 
 @pytest.fixture(scope='function')
+def column():
+    return Column(
+        name='name',
+        column_type='varchar(40)',
+        not_null=False,
+        key=None,
+        default=None,
+        extra=None
+    )
+
+
+@pytest.fixture(scope='function')
 def tables(columns):
     table1 = Table(
         name='Users',

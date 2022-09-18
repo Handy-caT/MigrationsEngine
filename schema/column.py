@@ -21,3 +21,13 @@ class Column:
             adict['Default'],
             adict['Extra']
         )
+
+    def __copy__(self):
+        return Column(
+            self.name,
+            self.column_type,
+            self.not_null,
+            self.key,
+            self.default,
+            self.extra
+        )
