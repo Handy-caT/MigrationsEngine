@@ -67,3 +67,20 @@ class Table:
 
         if not deleted:
             raise ColumnNotFoundException(column_name)
+
+    def get_column(self, column_name: str) -> Column:
+        for column in self.columns:
+            if column.name == column_name:
+                return column
+
+        raise ColumnNotFoundException(column_name)
+
+    def __copy__(self):
+        return Table(
+            name=self.name,
+            columns=self.columns.copy()
+        )
+
+    @property
+    def column_names(self):
+        return [column.name for column in self.columns]

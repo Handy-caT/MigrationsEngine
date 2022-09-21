@@ -3,7 +3,7 @@ class ColumnPlanBuilder:
         self.column_name = column_name
         self.table_name = table_name
         self._plan = {
-            'ColumnName': column_name
+            'ColumnName': column_name,
         }
 
     @classmethod

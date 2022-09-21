@@ -39,7 +39,7 @@ def columns():
 @pytest.fixture(scope='function')
 def column():
     return Column(
-        name='name',
+        name='password',
         column_type='varchar(40)',
         not_null=False,
         key=None,
@@ -61,6 +61,14 @@ def tables(columns):
     )
 
     return [table1, table2]
+
+
+@pytest.fixture(scope='function')
+def table(columns):
+    return Table(
+        name='Users',
+        columns=columns,
+    )
 
 
 @pytest.fixture(scope='function')

@@ -1,10 +1,13 @@
 from migration.column_plan_builder import ColumnPlanBuilder
-from schema.exceptions import InvalidColumnException
+from migration.table_plan_builder import TablePlanBuilder
+from schema.column import Column
+from schema.exceptions import InvalidColumnException, InvalidTableException
+from schema.table import Table
 
 
 class SchemaComparator:
     @staticmethod
-    def compare_columns(real_column, model_column):
+    def compare_columns(real_column: Column, model_column: Column) -> dict:
 
         plan_builder = ColumnPlanBuilder(column_name=real_column.name, table_name='test')
 
@@ -40,4 +43,22 @@ class SchemaComparator:
             if real_column.default is not None and model_column.default is None:
                 plan_builder.drop_default()
 
-        return plan_builder.get_plan()s
+        return plan_builder.get_plan()
+
+    @staticmethod
+    def compare_tables(real_table: Table, model_table: Table) -> dict:
+
+        plan_builder = TablePlanBuilder(table_name=model_table.name, columns=model_table.columns)
+
+        if real_table.name != model_table.name:
+            raise InvalidTableException(f'Table name mismatch: real {real_table.name} != model {model_table.name}')
+
+        for column in model_table.columns:
+            if column.name not in real_table.column_names:
+                plan_builder.alter_column(column.name)
+            else:
+                plan = SchemaComparator.compare_columns(real_table.get_column(column.name), column)
+                if len(plan) > 1:
+                    plan_builder.update_column(column.name, plan)
+
+        return plan_builder.get_plan()
