@@ -8,8 +8,9 @@ def test_column_model_init():
     key = None
     default = None
     extra = None
+    foreign_key = None
 
-    column = Column(name, column_type, not_null, key, default, extra)
+    column = Column(name, column_type, not_null, key, default, extra, foreign_key)
 
     assert column.name == name
     assert column.column_type == column_type.lower()
@@ -17,6 +18,7 @@ def test_column_model_init():
     assert column.key == key
     assert column.default == default
     assert column.extra == extra
+    assert column.foreign_key == foreign_key
 
 
 def test_column_model_from_dict():
@@ -26,7 +28,8 @@ def test_column_model_from_dict():
         'NotNull': False,
         'Key': None,
         'Default': None,
-        'Extra': None
+        'Extra': None,
+        'ForeignKey': None,
     }
 
     column = Column.from_dict(adict)
@@ -37,3 +40,4 @@ def test_column_model_from_dict():
     assert column.key == adict['Key']
     assert column.default == adict['Default']
     assert column.extra == adict['Extra']
+    assert column.foreign_key == adict['ForeignKey']

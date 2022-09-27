@@ -1,7 +1,8 @@
-from typing import List
+from typing import List, Optional
 
 from schema.column import Column
-from schema.exceptions import InvalidColumnException, ColumnNotFoundException
+from schema.exceptions import InvalidColumnException, ColumnNotFoundException, IndexNotFoundException
+from schema.index import Index
 
 
 class Table:
@@ -12,6 +13,14 @@ class Table:
                     raise InvalidColumnException(f'Primary key in {column.name} must be not null')
 
                 self._primary_key.append(column.name)
+
+    def _find_foreign_key(self):
+        for column in self.columns:
+            if column.foreign_key:
+                if column.key != 'MUL':
+                    raise InvalidColumnException(f'Foreign key in {column.name} must be a multiple key')
+
+                self._foreign_key.append(column.foreign_key)
 
     def _check_columns_unique(self):
         names = []
@@ -24,10 +33,12 @@ class Table:
 
         self.columns = columns
 
-    def __init__(self, name: str, columns: List[Column]):
+    def __init__(self, name: str, columns: List[Column], index: Optional[List[Index]] = None) -> None:
         self.name = name
         self.columns = columns
+        self.index = index
         self._primary_key = []
+        self._foreign_key = []
         self._find_primary_key()
         self._check_columns_unique()
 
@@ -54,7 +65,7 @@ class Table:
         self.columns.append(column)
         self._check_columns_unique()
 
-    def remove_column(self, column_name: str):
+    def drop_column(self, column_name: str):
         deleted = False
 
         for column in self.columns:
@@ -75,11 +86,26 @@ class Table:
 
         raise ColumnNotFoundException(column_name)
 
-    def __copy__(self):
+    def __copy__(self) -> 'Table':
         return Table(
             name=self.name,
             columns=self.columns.copy()
         )
+
+    def add_index(self, index: Index) -> None:
+        self.index.append(index)
+
+    def drop_index(self, index_name: str) -> None:
+        deleted = False
+
+        for index in self.index:
+            if index.name == index_name:
+                self.index.remove(index)
+                deleted = True
+                break
+
+        if not deleted:
+            raise IndexNotFoundException(index_name)
 
     @property
     def column_names(self):

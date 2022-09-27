@@ -41,3 +41,9 @@ class Database:
 
         if not deleted:
             raise InvalidTableException(f'No table named {table_name} in database {self.name}')
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.name!r}, {self.tables!r})'
+
+    def __str__(self):
+        return f'{self.name}'

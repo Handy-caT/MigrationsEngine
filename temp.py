@@ -8,4 +8,4 @@ print(column.key)
 
 print(column.type)
 
-print(column.name)
+print(column.default)

@@ -20,3 +20,11 @@ class InvalidTableException(Exception):
 
     def __str__(self):
         return self.message
+
+
+class IndexNotFoundException(Exception):
+    def __init__(self, index_name):
+        self.index_name = index_name
+
+    def __str__(self):
+        return "Index not found: " + self.index_name

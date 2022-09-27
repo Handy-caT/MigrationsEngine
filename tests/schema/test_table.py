@@ -99,7 +99,7 @@ def test_table_model_remove_column(columns):
     column_name = 'name'
 
     table = Table(name, columns_arr)
-    table.remove_column(column_name)
+    table.drop_column(column_name)
 
     assert len(table.columns) == len(columns_arr) - 1
 
@@ -112,7 +112,7 @@ def test_table_model_not_remove_primary_key(columns):
     table = Table(name, columns_arr)
 
     with pytest.raises(InvalidColumnException):
-        table.remove_column(column_name)
+        table.drop_column(column_name)
 
 
 def test_table_model_remove_not_found(columns):
@@ -123,4 +123,4 @@ def test_table_model_remove_not_found(columns):
     table = Table(name, columns_arr)
 
     with pytest.raises(ColumnNotFoundException):
-        table.remove_column(column_name)
+        table.drop_column(column_name)
