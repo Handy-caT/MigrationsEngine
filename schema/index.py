@@ -14,3 +14,9 @@ class Index:
             adict['Columns'],
             adict['Unique']
         )
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.name!r}, {self.columns!r}, {self.unique!r})'
+
+    def __str__(self):
+        return f'{self.__class__.__name__}: {self.name}'

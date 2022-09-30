@@ -68,8 +68,8 @@ def test_column_plan_add_default(column_plan_generator):
     }
 
 
-def test_column_plan_add_foreign_key(column_plan_generator):
-    column_plan_generator.add_foreign_key('test', 'id')
+def test_column_plan_add_foreign_key(column_plan_generator, foreign_key):
+    column_plan_generator.add_foreign_key(foreign_key)
 
     assert column_plan_generator.get_plan() == {
         'ColumnName': 'id',

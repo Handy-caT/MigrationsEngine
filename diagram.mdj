@@ -5647,7 +5647,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGDQjgxR/+TvpQ="
 									},
-									"name": "column"
+									"name": "column",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -5677,7 +5678,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGDQjnq7/+gdtg="
 									},
-									"name": "table"
+									"name": "table",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -5707,7 +5709,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGDQk6ewwF4JpI="
 									},
-									"name": "database"
+									"name": "database",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",

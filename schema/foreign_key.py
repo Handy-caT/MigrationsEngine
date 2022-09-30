@@ -17,3 +17,6 @@ class ForeignKey:
     def __repr__(self):
         return f'{self.__class__.__name__}({self.name!r}, {self.column_name!r}, ' \
                f'{self.key_table!r}, {self.key_column!r})'
+
+    def __str__(self):
+        return f'{self.__class__.__name__}: {self.name}'

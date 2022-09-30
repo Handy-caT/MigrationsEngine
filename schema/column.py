@@ -44,4 +44,4 @@ class Column:
                f' {self.default!r}, {self.extra!r}, {self.foreign_key!r})'
 
     def __str__(self):
-        return f'{self.name} {self.column_type}'
+        return f'{self.__class__.__name__}: {self.name} {self.column_type}'

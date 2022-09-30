@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from schema.column import Column
 from schema.exceptions import InvalidColumnException, ColumnNotFoundException, IndexNotFoundException
+from schema.foreign_key import ForeignKey
 from schema.index import Index
 
 
@@ -107,6 +108,25 @@ class Table:
         if not deleted:
             raise IndexNotFoundException(index_name)
 
+    def add_foreign_key(self, foreign_key: ForeignKey):
+        for column in self.columns:
+            if column.name == foreign_key.column_name:
+                if column.key == 'PRI':
+                    raise InvalidColumnException(f"Can't add {foreign_key} to {column}"
+                                                 f" because it has primary key")
+                else:
+                    pass
+
+                self._foreign_key.append(foreign_key)
+                column.foreign_key = foreign_key
+                break
+
     @property
     def column_names(self):
         return [column.name for column in self.columns]
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.name!r}, {self.columns!r}, {self.index!r})'
+
+    def __str__(self):
+        return f'{self.__class__.__name__}: {self.name}'

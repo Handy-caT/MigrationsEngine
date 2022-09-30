@@ -3,6 +3,7 @@ import pytest
 from migration.column_plan_builder import ColumnPlanBuilder
 from migration.table_plan_builder import TablePlanBuilder
 from schema.column import Column
+from schema.foreign_key import ForeignKey
 from schema.table import Table
 
 
@@ -79,3 +80,13 @@ def table_plan_generator(columns):
 @pytest.fixture(scope='function')
 def column_plan_generator():
     return ColumnPlanBuilder(column_name='id', table_name='test')
+
+
+@pytest.fixture(scope='function')
+def foreign_key():
+    return ForeignKey(
+        name='fk_test',
+        column_name='test_id',
+        key_table='test',
+        key_column='id'
+    )

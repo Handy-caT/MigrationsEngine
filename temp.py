@@ -1,8 +1,9 @@
 from sqlalchemy import Column, String, ForeignKey
 
-column = Column('data', String(40), ForeignKey('users.id'))
+column = Column('data', String(40), ForeignKey('users.id'), autoincrement=True)
 
-print(column.__dict__)
+for i in column.foreign_keys:
+    print(i.target_fullname)
 
 print(column.key)
 

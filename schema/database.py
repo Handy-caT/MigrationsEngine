@@ -46,4 +46,4 @@ class Database:
         return f'{self.__class__.__name__}({self.name!r}, {self.tables!r})'
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.__class__.__name__}: {self.name}'
