@@ -1,5 +1,4 @@
-from database.ddl_components_abstract import DDLComposite, DDLComponent, DDLLeaf
-from schema.column import Column
+from database.ddl_components_abstract import DDLComposite
 
 
 class AlterTable(DDLComposite):
@@ -11,4 +10,15 @@ class AlterTable(DDLComposite):
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.table_name!r}, {self.if_exists!r}, {self._components!r})'
+
+
+class AlterColumn(DDLComposite):
+
+    def __init__(self, column_name: str):
+        super().__init__()
+        self.column_name = column_name
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.column_name!r}, {self._components!r})'
+
 
