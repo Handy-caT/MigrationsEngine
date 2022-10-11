@@ -1,12 +1,17 @@
 from sqlalchemy import Column, String, ForeignKey
 
-column = Column('data', String(40), ForeignKey('users.id'), autoincrement=True)
+import schema.column
+from database.ddl_components_abstract import DDLComponent, DDLComposite
+from database.ddl_composites import AlterTable, AddColumn
 
-for i in column.foreign_keys:
-    print(i.target_fullname)
+# column = Column('data', String(40), ForeignKey('users.id'), autoincrement=True)
+#
+# for i in column.foreign_keys:
+#     print(i.target_fullname)
+#
+# print(column.key)
+#
+# print(column.type)
+#
+# print(column.default)
 
-print(column.key)
-
-print(column.type)
-
-print(column.default)

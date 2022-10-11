@@ -38,8 +38,9 @@ class SQLAlchemySchemaParser(AbstractSchemaParser):
 
         if column.foreign_keys:
             key = list(column.foreign_keys)[0]
-            names = key.split('.')
-            fk_name = 'fk_' + key
+            names = key.target_fullname.split('.')
+
+            fk_name = 'fk_' + key.target_fullname.replace('.', '_')
             fk = ForeignKey(fk_name, column.name, names[0], names[1])
             adict['ForeignKey'] = fk
         else:

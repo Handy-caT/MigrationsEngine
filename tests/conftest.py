@@ -1,6 +1,7 @@
 import pytest
 
 from migration.column_plan_builder import ColumnPlanBuilder
+from migration.sql_alchemy_schema_parser import SQLAlchemySchemaParser
 from migration.table_plan_builder import TablePlanBuilder
 from schema.column import Column
 from schema.foreign_key import ForeignKey
@@ -90,3 +91,8 @@ def foreign_key():
         key_table='test',
         key_column='id'
     )
+
+
+@pytest.fixture(scope='function')
+def parser():
+    return SQLAlchemySchemaParser()
