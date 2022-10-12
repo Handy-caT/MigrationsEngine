@@ -1,5 +1,7 @@
 from database.ddl_components_abstract import DDLLeaf
 from schema.column import Column
+from schema.foreign_key import ForeignKey
+from schema.index import Index
 
 
 class AddColumn(DDLLeaf):
@@ -72,4 +74,77 @@ class RenameTable(DDLLeaf):
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.old_name!r}, {self.new_name!r})'
+
+
+class AddForeignKey(DDLLeaf):
+
+    def __init__(self, foreign_key: ForeignKey):
+        super().__init__()
+        self.foreign_key = foreign_key
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.foreign_key!r})'
+
+
+class AddUnique(DDLLeaf):
+
+    def __init__(self, unique: Index):
+        super().__init__()
+        self.unique = unique
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.unique!r})'
+
+
+class DropConstraint(DDLLeaf):
+
+    def __init__(self, constraint_name: str):
+
+        super().__init__()
+        self.constraint_name = constraint_name
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.constraint_name!r})'
+
+
+class DropIndex(DDLLeaf):
+
+    def __init__(self, index_name: str, table_name: str = None):
+        super().__init__()
+        self.index_name = index_name
+        self.table_name = table_name
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.table_name}, {self.index_name!r})'
+
+
+class DropTable(DDLLeaf):
+
+    def __init__(self, table_name: str):
+        super().__init__()
+        self.table_name = table_name
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.table_name!r})'
+
+
+class ShowColumns(DDLLeaf):
+
+    def __init__(self, table_name: str):
+        super().__init__()
+        self.table_name = table_name
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.table_name!r})'
+
+
+class CreateIndex(DDLLeaf):
+
+    def __init__(self, index: Index, table_name: str = None):
+        super().__init__()
+        self.index = index
+        self.table_name = table_name
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.table_name}, {self.index!r})'
     

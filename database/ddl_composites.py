@@ -22,3 +22,12 @@ class AlterColumn(DDLComposite):
         return f'{self.__class__.__name__}({self.column_name!r}, {self._components!r})'
 
 
+class AlterIndex(DDLComposite):
+
+    def __init__(self, index: str, table_name: str):
+        super().__init__()
+        self.table_name = table_name
+        self.index = index
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.table_name}, {self.index!r}, {self._components!r})'
