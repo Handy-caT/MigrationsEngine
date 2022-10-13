@@ -53,7 +53,7 @@ class SchemaComparator:
         if real_table.name != model_table.name:
             raise InvalidTableException(f'Table name mismatch: real {real_table.name} != model {model_table.name}')
 
-        for column in model_table.columns:
+        for column in model_table:
             if column.name not in real_table.column_names:
                 plan_builder.alter_column(column.name)
             else:

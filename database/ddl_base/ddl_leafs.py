@@ -1,4 +1,4 @@
-from database.ddl_components_abstract import DDLLeaf
+from database.ddl_base.ddl_components_abstract import DDLLeaf
 from schema.column import Column
 from schema.foreign_key import ForeignKey
 from schema.index import Index
@@ -147,4 +147,3 @@ class CreateIndex(DDLLeaf):
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.table_name}, {self.index!r})'
-    

@@ -13,7 +13,6 @@ class DDLComponent(ABC):
         raise NotImplementedError
 
 
-
 class DDLComposite(DDLComponent, ABC):
 
     def __init__(self):
@@ -37,10 +36,8 @@ class DDLComposite(DDLComponent, ABC):
         raise NotImplementedError
 
 
-
 class DDLLeaf(DDLComponent, ABC):
 
     @abc.abstractmethod
     def __repr__(self):
         raise NotImplementedError
-

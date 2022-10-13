@@ -1,4 +1,4 @@
-from database.ddl_components_abstract import DDLComposite
+from database.ddl_base.ddl_components_abstract import DDLComposite
 
 
 class AlterTable(DDLComposite):

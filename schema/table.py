@@ -130,3 +130,6 @@ class Table:
 
     def __str__(self):
         return f'{self.__class__.__name__}: {self.name}'
+
+    def __iter__(self):
+        return iter(self.columns)
