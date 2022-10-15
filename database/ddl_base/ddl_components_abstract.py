@@ -12,6 +12,9 @@ class DDLComponent(ABC):
     def __repr__(self):
         raise NotImplementedError
 
+    def __iter__(self):
+        return iter([])
+
 
 class DDLComposite(DDLComponent, ABC):
 
@@ -25,7 +28,8 @@ class DDLComposite(DDLComponent, ABC):
     def add_component(self, component: DDLComponent):
         self._components.append(component)
 
-    def get_components(self):
+    @property
+    def components(self):
         return self._components
 
     def remove_component(self, component: DDLComponent):
@@ -35,9 +39,27 @@ class DDLComposite(DDLComponent, ABC):
     def __repr__(self):
         raise NotImplementedError
 
+    def __iter__(self, depth=0):
+        def gen(composite):
+            yield composite, depth
+            for component in composite.components:
+                iterator = component.__iter__(depth + 1)
+                try:
+                    yield from iterator
+                except StopIteration:
+                    pass
+
+        return gen(self)
+
 
 class DDLLeaf(DDLComponent, ABC):
 
     @abc.abstractmethod
     def __repr__(self):
         raise NotImplementedError
+
+    def __iter__(self, depth=0):
+        def gen(leaf):
+            yield leaf, depth
+
+        return gen(self)

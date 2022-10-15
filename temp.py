@@ -8,6 +8,23 @@
 # print(column.type)
 #
 # print(column.default)
+from database.ddl_base.ddl_composites import AlterTable, AlterColumn
+from database.ddl_base.ddl_leafs import RenameColumn, ColumnNotNull, ColumnDefault
+from database.translators.default_translator import DefaultTranslator
 
-temp = '%s %s'
-print(temp % ('hello', 'xd'))
+#temp = '%s %s'
+#print(temp % ('hello', 'xd'))
+
+table = AlterTable('users')
+column = AlterColumn('data')
+column.add_component(ColumnNotNull())
+column.add_component(ColumnDefault('xd'))
+table.add_component(column)
+table.add_component(RenameColumn('old_name', 'new_name'))
+
+for i in table:
+    print(i)
+
+translator = DefaultTranslator()
+res = translator.translate(table)
+print(res)

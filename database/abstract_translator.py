@@ -6,8 +6,8 @@ from database.ddl_base.ddl_components_abstract import DDLComponent
 
 class AbstractTranslator(ABC):
 
-    @abc.abstractmethod
     @property
+    @abc.abstractmethod
     def dialect(self):
         raise NotImplementedError
 

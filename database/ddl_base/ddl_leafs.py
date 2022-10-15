@@ -36,9 +36,9 @@ class ColumnDefault(DDLLeaf):
 
 class ColumnNotNull(DDLLeaf):
 
-    def __init__(self, not_null: bool):
+    def __init__(self):
         super().__init__()
-        self.not_null = not_null
+        self.not_null = True
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.not_null!r})'
