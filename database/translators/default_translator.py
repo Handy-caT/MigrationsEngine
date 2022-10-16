@@ -1,7 +1,6 @@
 from database.abstract_translator import AbstractTranslator
 from database.ddl_base.ddl_components_abstract import DDLComponent
-from database.ddl_base.ddl_composites import AlterTable, AlterColumn
-from database.ddl_base.ddl_leafs import ColumnDefault, ColumnNotNull, RenameColumn, DropColumn
+from database.ddl_base.ddl_composites import AlterTable
 
 
 def _alter_table(component: AlterTable) -> str:
@@ -11,33 +10,15 @@ def _alter_table(component: AlterTable) -> str:
         return 'ALTER TABLE %s' % component.table_name
 
 
-def _alter_column(component: AlterColumn) -> str:
-    return 'ALTER COLUMN %s' % component.column_name
-
-
-def _column_default(component: ColumnDefault) -> str:
-    return 'SET DEFAULT %s' % component.default
-
-
-def _column_not_null(component: ColumnNotNull) -> str:
-    return 'SET NOT NULL'
-
-
-def _rename_column(component: RenameColumn) -> str:
-    return 'RENAME COLUMN %s TO %s' % (component.old_name, component.new_name)
-
-
-def _drop_column(component: DropColumn) -> str:
-    return 'DROP COLUMN %s' % component.column_name
-
-
 translate_dict = {
     'AlterTable': _alter_table,
-    'AlterColumn': _alter_column,
-    'ColumnDefault': _column_default,
-    'ColumnNotNull': _column_not_null,
-    'DropColumn': _drop_column,
-    'RenameColumn': _rename_column,
+    'AlterColumn': (lambda component: 'ALTER COLUMN %s' % component.column_name),
+    'ColumnDefault': (lambda component: 'SET DEFAULT %s' % component.default),
+    'ColumnNotNull': (lambda component: 'SET NOT NULL'),
+    'DropColumn': (lambda component: 'DROP COLUMN %s' % component.column_name),
+    'RenameColumn': (lambda component: 'RENAME COLUMN %s TO %s' % (component.old_name, component.new_name)),
+    'ShowColumns': (lambda component: 'SHOW COLUMNS FROM %s' % component.table_name),
+    'Composite': (lambda component: '')
 }
 
 
@@ -46,7 +27,7 @@ def _translate_one(component: DDLComponent):
 
 
 def _get_command(command: list[str]) -> str:
-    return ' '.join(command) + ';'
+    return (' '.join(command) + ';').lstrip()
 
 
 class DefaultTranslator(AbstractTranslator):

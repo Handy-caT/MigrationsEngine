@@ -1,6 +1,16 @@
 from database.ddl_base.ddl_components_abstract import DDLComposite
 
 
+class Composite(DDLComposite):
+    def __init__(self, *args):
+        super().__init__()
+        for component in args:
+            self._components.append(component)
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self._components!r})'
+
+
 class AlterTable(DDLComposite):
 
     def __init__(self, table_name: str, if_exists: bool = False):
