@@ -1,13 +1,14 @@
 from database.ddl_base.ddl_components_abstract import DDLComposite
+from schema.column import Column
 
 
 class ModifyColumn(DDLComposite):
-    def __init__(self, column_name: str):
+    def __init__(self, column: Column):
         super().__init__()
-        self.column_name = column_name
+        self.column = column
 
     def __repr__(self):
-        return f'{self.__class__.__name__}({self.column_name}, {self._components!r})'
+        return f'{self.__class__.__name__}({self.column}, {self._components!r})'
 
 
 class NotNull(DDLComposite):

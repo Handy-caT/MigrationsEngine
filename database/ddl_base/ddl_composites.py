@@ -1,4 +1,6 @@
 from database.ddl_base.ddl_components_abstract import DDLComposite
+from database.visitors.abstract_visitor import AbstractVisitor
+from schema.column import Column
 
 
 class Composite(DDLComposite):
@@ -21,15 +23,18 @@ class AlterTable(DDLComposite):
     def __repr__(self):
         return f'{self.__class__.__name__}({self.table_name!r}, {self.if_exists!r}, {self._components!r})'
 
+    def accept(self, visitor: AbstractVisitor):
+        visitor.visit_alter_table(self)
+
 
 class AlterColumn(DDLComposite):
 
-    def __init__(self, column_name: str):
+    def __init__(self, column: Column):
         super().__init__()
-        self.column_name = column_name
+        self.column = column
 
     def __repr__(self):
-        return f'{self.__class__.__name__}({self.column_name!r}, {self._components!r})'
+        return f'{self.__class__.__name__}({self.column!r}, {self._components!r})'
 
 
 class AlterIndex(DDLComposite):

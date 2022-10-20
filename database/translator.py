@@ -2,7 +2,7 @@ from database.ddl_base.ddl_components_abstract import DDLComponent
 
 
 def _get_command(command: list[str]) -> str:
-    return (' '.join(command) + ';').lstrip()
+    return (' '.join(command).strip() + ';')
 
 
 class Translator:

@@ -1,16 +1,14 @@
 import abc
 
-from database.ddl_base.ddl_composites import AlterTable, AlterColumn
-
 
 class AbstractVisitor:
     def visit(self, node):
         pass
 
-    def visit_alter_table(self, node: AlterTable):
+    def visit_alter_table(self, node):
         pass
 
-    def visit_alter_column(self, node: AlterColumn):
+    def visit_alter_column(self, node):
         pass
 
 

@@ -7,12 +7,12 @@ from database.translator import Translator
 
 
 @pytest.fixture(scope='function')
-def composite_ddl():
+def composite_ddl(column):
     composite = Composite()
 
     alter_table = AlterTable('users')
 
-    alter_column = AlterColumn('data')
+    alter_column = AlterColumn(column)
     alter_column.add_component(ColumnNotNull())
     alter_column.add_component(ColumnDefault('xd'))
 

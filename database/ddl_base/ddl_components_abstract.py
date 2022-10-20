@@ -1,8 +1,10 @@
 import abc
 from abc import ABC
 
+from database.visitors.abstract_visitor import AbstractNode, AbstractVisitor
 
-class DDLComponent(ABC):
+
+class DDLComponent(ABC, AbstractNode):
 
     @property
     def is_composite(self):
@@ -14,6 +16,9 @@ class DDLComponent(ABC):
 
     def __iter__(self):
         return iter([])
+
+    def accept(self, visitor: AbstractVisitor):
+        visitor.visit(self)
 
 
 class DDLComposite(DDLComponent, ABC):

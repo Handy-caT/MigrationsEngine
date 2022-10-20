@@ -10,25 +10,45 @@
 # print(column.default)
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn, Composite
 from database.ddl_base.ddl_leafs import RenameColumn, ColumnNotNull, ColumnDefault, ShowColumns
-from database.translator import DefaultTranslator
+from database.dialects.mysql.mysql_visitor import MySqlVisitor
+from database.dialects.mysql.translate_dict import translate_dict_mysql
+from database.translator import Translator
+from schema.column import Column
 
 #temp = '%s %s'
 #print(temp % ('hello', 'xd'))
 
+column_obj = Column(
+        name='password',
+        column_type='varchar(40)',
+        not_null=False,
+        key=None,
+        default=None,
+        extra=None
+    )
+
 table = AlterTable('users')
-column = AlterColumn('data')
+column = AlterColumn(column_obj)
 column.add_component(ColumnNotNull())
 column.add_component(ColumnDefault('xd'))
 table.add_component(column)
 table.add_component(RenameColumn('old_name', 'new_name'))
 
-composite = Composite()
-composite.add_component(table)
-composite.add_component(ShowColumns('users'))
+# composite = Composite()
+# composite.add_component(table)
+# composite.add_component(ShowColumns('users'))
+#
+# for i in composite:
+#     print(i)
 
-for i in composite:
+visitor = MySqlVisitor()
+
+for i in table:
+    table.accept(visitor)
+
+print(table)
+for i in table:
     print(i)
 
-translator = DefaultTranslator()
-res = translator.translate(composite)
-print(res)
+translator = Translator(translate_dict_mysql)
+print(translator.translate(table))

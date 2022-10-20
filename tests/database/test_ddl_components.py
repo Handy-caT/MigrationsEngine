@@ -12,12 +12,12 @@ def test_iter_leaf():
     assert list(leaf) == [(leaf, 0)]
 
 
-def test_iter_composite():
+def test_iter_composite(column):
     composite = Composite()
 
     alter_table = AlterTable('users')
 
-    alter_column = AlterColumn('data')
+    alter_column = AlterColumn(column)
     not_null = ColumnNotNull()
     alter_column.add_component(not_null)
     default = ColumnDefault('xd')

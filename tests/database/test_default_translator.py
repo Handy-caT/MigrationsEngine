@@ -8,20 +8,20 @@ def test_leaf_translate(default_translator):
     assert default_translator.translate(leaf) == ['SHOW COLUMNS FROM users;']
 
 
-def test_line_translate(default_translator):
+def test_line_translate(default_translator, column):
     alter_table = AlterTable('users')
-    alter_column = AlterColumn('data')
+    alter_column = AlterColumn(column)
     alter_column.add_component(ColumnNotNull())
     alter_table.add_component(alter_column)
 
     assert default_translator.translate(alter_table) == [
-        'ALTER TABLE users ALTER COLUMN data SET NOT NULL;'
+        f'ALTER TABLE users ALTER COLUMN {column.name} SET NOT NULL;'
     ]
 
 
-def test_composite_translate(default_translator, composite_ddl):
+def test_composite_translate(default_translator, composite_ddl, column):
     assert default_translator.translate(composite_ddl) == [
-        'ALTER TABLE users ALTER COLUMN data SET NOT NULL;',
-        'ALTER TABLE users ALTER COLUMN data SET DEFAULT xd;',
+        f'ALTER TABLE users ALTER COLUMN {column.name} SET NOT NULL;',
+        f'ALTER TABLE users ALTER COLUMN {column.name} SET DEFAULT xd;',
         'SHOW COLUMNS FROM users;'
     ]

@@ -10,11 +10,12 @@ def _alter_table(component: AlterTable) -> str:
 
 translate_dict_default = {
     'AlterTable': _alter_table,
-    'AlterColumn': (lambda component: 'ALTER COLUMN %s' % component.column_name),
+    'AlterColumn': (lambda component: 'ALTER COLUMN %s' % component.column.name),
     'ColumnDefault': (lambda component: 'SET DEFAULT %s' % component.default),
     'ColumnNotNull': (lambda component: 'SET NOT NULL'),
     'DropColumn': (lambda component: 'DROP COLUMN %s' % component.column_name),
     'RenameColumn': (lambda component: 'RENAME COLUMN %s TO %s' % (component.old_name, component.new_name)),
     'ShowColumns': (lambda component: 'SHOW COLUMNS FROM %s' % component.table_name),
-    'Composite': (lambda component: '')
+    'Composite': (lambda component: ''),
+    'Leaf': (lambda component: ''),
 }
