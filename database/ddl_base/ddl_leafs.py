@@ -4,6 +4,14 @@ from schema.foreign_key import ForeignKey
 from schema.index import Index
 
 
+class Leaf(DDLLeaf):
+    def __init__(self):
+        super().__init__()
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}()'
+
+
 class AddColumn(DDLLeaf):
 
     def __init__(self, column: Column):

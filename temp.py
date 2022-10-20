@@ -10,7 +10,7 @@
 # print(column.default)
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn, Composite
 from database.ddl_base.ddl_leafs import RenameColumn, ColumnNotNull, ColumnDefault, ShowColumns
-from database.translators.default_translator import DefaultTranslator
+from database.translator import DefaultTranslator
 
 #temp = '%s %s'
 #print(temp % ('hello', 'xd'))

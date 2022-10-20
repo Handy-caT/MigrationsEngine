@@ -1,14 +1,11 @@
 import pytest
 
-from database.translators.default_translator import DefaultTranslator
 from migration.column_plan_builder import ColumnPlanBuilder
 from migration.sql_alchemy_schema_parser import SQLAlchemySchemaParser
 from migration.table_plan_builder import TablePlanBuilder
 from schema.column import Column
 from schema.foreign_key import ForeignKey
 from schema.table import Table
-from database.ddl_base.ddl_composites import Composite, AlterTable, AlterColumn
-from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, ShowColumns
 
 
 @pytest.fixture(scope='function')
@@ -101,23 +98,4 @@ def parser():
     return SQLAlchemySchemaParser()
 
 
-@pytest.fixture(scope='function')
-def composite_ddl():
-    composite = Composite()
 
-    alter_table = AlterTable('users')
-
-    alter_column = AlterColumn('data')
-    alter_column.add_component(ColumnNotNull())
-    alter_column.add_component(ColumnDefault('xd'))
-
-    alter_table.add_component(alter_column)
-    composite.add_component(alter_table)
-    composite.add_component(ShowColumns('users'))
-
-    return composite
-
-
-@pytest.fixture(scope='function')
-def default_translator():
-    return DefaultTranslator()
