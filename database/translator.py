@@ -6,20 +6,18 @@ def _get_command(command: list[str]) -> str:
 
 
 class Translator:
-    @property
-    def dialect(self):
-        return 'default'
 
-    def __init__(self, translate_dict: dict):
+    def __init__(self, translate_dict: dict, dialect: str = 'default'):
         self.translate_dict = translate_dict
+        self.dialect = dialect
 
     def _translate_one(self, component: DDLComponent):
         return self.translate_dict[component.__class__.__name__](component)
 
-    def translate(self, ddl_component: DDLComponent):
-        command = []
+    def translate(self, ddl_component: DDLComponent) -> list[str]:
+        command: list[str] = []
         depth = 0
-        result = []
+        result: list[str] = []
 
         for i in ddl_component:
             if i[1] > depth:

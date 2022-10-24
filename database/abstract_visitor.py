@@ -1,7 +1,7 @@
 import abc
 
 
-class AbstractVisitor:
+class BaseVisitor:
     def visit(self, node):
         pass
 
@@ -14,5 +14,5 @@ class AbstractVisitor:
 
 class AbstractNode:
     @abc.abstractmethod
-    def accept(self, visitor: AbstractVisitor):
+    def accept(self, visitor: BaseVisitor):
         raise NotImplementedError

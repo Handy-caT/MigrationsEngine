@@ -1,7 +1,7 @@
 from database.ddl_base.ddl_composites import AlterColumn, AlterTable
 from database.ddl_base.ddl_leafs import Leaf
 from database.dialects.mysql.mysql_ddl import ModifyColumn, NotNull, Default
-from database.visitors.abstract_visitor import AbstractVisitor
+from database.abstract_visitor import BaseVisitor
 
 alter_column_dict = {
     'ColumnNotNull': (lambda component: NotNull(component.not_null)),
@@ -9,7 +9,7 @@ alter_column_dict = {
 }
 
 
-class MySqlVisitor(AbstractVisitor):
+class MySqlVisitor(BaseVisitor):
     def visit_alter_table(self, node: AlterTable):
         for component in node.components:
             if isinstance(component, AlterColumn) and len(component.components) > 1:
