@@ -50,5 +50,9 @@ print(table)
 for i in table:
     print(i)
 
+for i in table:
+    print(i)
+
+
 translator = Translator(translate_dict_mysql)
 print(translator.translate(table))

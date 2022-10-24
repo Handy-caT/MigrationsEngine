@@ -20,6 +20,9 @@ class DDLComponent(ABC, AbstractNode):
     def accept(self, visitor: AbstractVisitor):
         visitor.visit(self)
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
 
 class DDLComposite(DDLComponent, ABC):
 
@@ -56,6 +59,9 @@ class DDLComposite(DDLComponent, ABC):
 
         return gen(self)
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
 
 class DDLLeaf(DDLComponent, ABC):
 
@@ -68,3 +74,6 @@ class DDLLeaf(DDLComponent, ABC):
             yield leaf, depth
 
         return gen(self)
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__

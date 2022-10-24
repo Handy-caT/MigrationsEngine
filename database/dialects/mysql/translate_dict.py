@@ -19,4 +19,6 @@ translate_dict_mysql = {
     'ModifyColumn': (lambda component: 'MODIFY COLUMN %s %s' % (component.column.name, component.column.column_type)),
     'RenameColumn': translate_dict_default['RenameColumn'],
     'Leaf': translate_dict_default['Leaf'],
+    'Composite': translate_dict_default['Composite'],
+    'ShowColumns': translate_dict_default['ShowColumns'],
 }
