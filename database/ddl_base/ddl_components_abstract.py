@@ -1,5 +1,6 @@
 import abc
 from abc import ABC
+from copy import deepcopy
 
 from database.abstract_visitor import AbstractNode, BaseVisitor
 
@@ -62,6 +63,16 @@ class DDLComposite(DDLComponent, ABC):
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
 
+    def __deepcopy__(self, memodict=None):
+        if memodict is None:
+            memodict = {}
+
+        copy = type(self)(**self.__dict__)
+        for component in self.components:
+            copy.add_component(deepcopy(component, memodict))
+
+        return copy
+
 
 class DDLLeaf(DDLComponent, ABC):
 
@@ -77,3 +88,6 @@ class DDLLeaf(DDLComponent, ABC):
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
+
+    def __deepcopy__(self, memodict={}):
+        return type(self)(**self.__dict__)

@@ -4,7 +4,7 @@ from schema.column import Column
 
 
 class Composite(DDLComposite):
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         super().__init__()
         for component in args:
             self._components.append(component)
@@ -15,7 +15,7 @@ class Composite(DDLComposite):
 
 class AlterTable(DDLComposite):
 
-    def __init__(self, table_name: str, if_exists: bool = False):
+    def __init__(self, table_name: str, if_exists: bool = False, *args, **kwargs):
         super().__init__()
         self.table_name = table_name
         self.if_exists = if_exists
@@ -29,7 +29,7 @@ class AlterTable(DDLComposite):
 
 class AlterColumn(DDLComposite):
 
-    def __init__(self, column: Column):
+    def __init__(self, column: Column, *args, **kwargs):
         super().__init__()
         self.column = column
 
@@ -39,7 +39,7 @@ class AlterColumn(DDLComposite):
 
 class AlterIndex(DDLComposite):
 
-    def __init__(self, index: str, table_name: str):
+    def __init__(self, index: str, table_name: str, *args, **kwargs):
         super().__init__()
         self.table_name = table_name
         self.index = index

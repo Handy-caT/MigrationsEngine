@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from database.ddl_base.ddl_composites import Composite, AlterTable, AlterColumn
 from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, ShowColumns
 
@@ -36,3 +38,10 @@ def test_iter_composite(column):
         (default, 3),
         (show_columns, 1)
     ]
+
+
+def test_copy_composite(composite_ddl):
+    copy = deepcopy(composite_ddl)
+
+    assert copy == composite_ddl
+    assert copy is not composite_ddl

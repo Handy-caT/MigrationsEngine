@@ -8,6 +8,8 @@
 # print(column.type)
 #
 # print(column.default)
+from copy import deepcopy
+
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn, Composite
 from database.ddl_base.ddl_leafs import RenameColumn, ColumnNotNull, ColumnDefault, ShowColumns
 from database.dialects.mysql.mysql_visitor import MySqlVisitor
@@ -43,16 +45,9 @@ table.add_component(RenameColumn('old_name', 'new_name'))
 
 visitor = MySqlVisitor()
 
-for i in table:
-    table.accept(visitor)
-
 print(table)
-for i in table:
-    print(i)
-
-for i in table:
-    print(i)
-
+print('------------------')
+print(deepcopy(table))
 
 translator = Translator(translate_dict_mysql)
 print(translator.translate(table))
