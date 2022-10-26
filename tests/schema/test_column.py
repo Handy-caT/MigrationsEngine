@@ -1,4 +1,4 @@
-from schema.column import Column
+from database.schema.column import Column
 
 
 def test_column_model_init():

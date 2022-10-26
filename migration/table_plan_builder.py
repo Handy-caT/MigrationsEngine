@@ -1,7 +1,7 @@
 from typing import List
 
-from schema.column import Column
-from schema.exceptions import ColumnNotFoundException
+from database.schema.column import Column
+from database.schema.exceptions import ColumnNotFoundException
 
 
 class TablePlanBuilder:

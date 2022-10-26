@@ -1,7 +1,6 @@
 from typing import Optional, List
 
-from schema.foreign_key import ForeignKey
-from schema.index import Index
+from database.schema.foreign_key import ForeignKey
 
 
 class Column:

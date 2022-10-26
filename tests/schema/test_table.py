@@ -1,8 +1,8 @@
 import pytest
 
-from schema.column import Column
-from schema.exceptions import InvalidColumnException, ColumnNotFoundException
-from schema.table import Table
+from database.schema.column import Column
+from database.schema.exceptions import InvalidColumnException, ColumnNotFoundException
+from database.schema.table import Table
 
 
 def test_table_model_init(columns):

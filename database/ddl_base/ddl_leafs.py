@@ -1,7 +1,7 @@
 from database.ddl_base.ddl_components_abstract import DDLLeaf
-from schema.column import Column
-from schema.foreign_key import ForeignKey
-from schema.index import Index
+from database.schema.column import Column
+from database.schema.foreign_key import ForeignKey
+from database.schema.index import Index
 
 
 class Leaf(DDLLeaf):

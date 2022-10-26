@@ -1,4 +1,4 @@
-from schema.foreign_key import ForeignKey
+from database.schema.foreign_key import ForeignKey
 
 
 class ColumnPlanBuilder:

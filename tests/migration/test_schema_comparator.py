@@ -1,7 +1,7 @@
 import pytest
 
 from migration.schema_comparator import SchemaComparator
-from schema.exceptions import InvalidColumnException, InvalidTableException
+from database.schema.exceptions import InvalidColumnException, InvalidTableException
 
 
 def test_schema_comparator_columns_not_null(column):

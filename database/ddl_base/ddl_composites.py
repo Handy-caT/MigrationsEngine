@@ -1,6 +1,6 @@
 from database.ddl_base.ddl_components_abstract import DDLComposite
 from database.abstract_visitor import BaseVisitor
-from schema.column import Column
+from database.schema.column import Column
 
 
 class Composite(DDLComposite):

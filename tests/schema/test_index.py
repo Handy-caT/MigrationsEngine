@@ -1,4 +1,4 @@
-from schema.index import Index
+from database.schema.index import Index
 
 
 def test_index_init():

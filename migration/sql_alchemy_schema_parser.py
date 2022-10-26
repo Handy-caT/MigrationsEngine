@@ -1,12 +1,10 @@
-import string
-
 import sqlalchemy.schema
 
 from migration.abstract_schema_parser import AbstractSchemaParser
-from schema.column import Column
-from schema.database import Database
-from schema.foreign_key import ForeignKey
-from schema.table import Table
+from database.schema.column import Column
+from database.schema.database import Database
+from database.schema.foreign_key import ForeignKey
+from database.schema.table import Table
 
 
 class SQLAlchemySchemaParser(AbstractSchemaParser):

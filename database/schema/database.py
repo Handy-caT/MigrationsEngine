@@ -1,4 +1,4 @@
-from schema.exceptions import InvalidTableException
+from database.schema.exceptions import InvalidTableException
 
 
 class Database:

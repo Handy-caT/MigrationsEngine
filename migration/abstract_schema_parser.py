@@ -1,8 +1,8 @@
 import abc
 
-from schema.column import Column
-from schema.database import Database
-from schema.table import Table
+from database.schema.column import Column
+from database.schema.database import Database
+from database.schema.table import Table
 
 
 class AbstractSchemaParser:

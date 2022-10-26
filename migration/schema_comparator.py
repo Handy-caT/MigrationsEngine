@@ -1,8 +1,8 @@
 from migration.column_plan_builder import ColumnPlanBuilder
 from migration.table_plan_builder import TablePlanBuilder
-from schema.column import Column
-from schema.exceptions import InvalidColumnException, InvalidTableException
-from schema.table import Table
+from database.schema.column import Column
+from database.schema.exceptions import InvalidColumnException, InvalidTableException
+from database.schema.table import Table
 
 
 class SchemaComparator:

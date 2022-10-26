@@ -10,12 +10,12 @@
 # print(column.default)
 from copy import deepcopy
 
-from database.ddl_base.ddl_composites import AlterTable, AlterColumn, Composite
-from database.ddl_base.ddl_leafs import RenameColumn, ColumnNotNull, ColumnDefault, ShowColumns
+from database.ddl_base.ddl_composites import AlterTable, AlterColumn
+from database.ddl_base.ddl_leafs import RenameColumn, ColumnNotNull, ColumnDefault
 from database.dialects.mysql.mysql_visitor import MySqlVisitor
 from database.dialects.mysql.translate_dict import translate_dict_mysql
 from database.translator import Translator
-from schema.column import Column
+from database.schema.column import Column
 
 #temp = '%s %s'
 #print(temp % ('hello', 'xd'))

@@ -3,9 +3,9 @@ import pytest
 from migration.column_plan_builder import ColumnPlanBuilder
 from migration.sql_alchemy_schema_parser import SQLAlchemySchemaParser
 from migration.table_plan_builder import TablePlanBuilder
-from schema.column import Column
-from schema.foreign_key import ForeignKey
-from schema.table import Table
+from database.schema.column import Column
+from database.schema.foreign_key import ForeignKey
+from database.schema.table import Table
 
 
 @pytest.fixture(scope='function')

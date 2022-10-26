@@ -1,9 +1,9 @@
 from typing import List, Optional
 
-from schema.column import Column
-from schema.exceptions import InvalidColumnException, ColumnNotFoundException, IndexNotFoundException
-from schema.foreign_key import ForeignKey
-from schema.index import Index
+from database.schema.column import Column
+from database.schema.exceptions import InvalidColumnException, ColumnNotFoundException, IndexNotFoundException
+from database.schema.foreign_key import ForeignKey
+from database.schema.index import Index
 
 
 class Table:

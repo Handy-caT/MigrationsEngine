@@ -1,7 +1,7 @@
 import pytest
 
 from migration.table_plan_builder import TablePlanBuilder
-from schema.exceptions import ColumnNotFoundException
+from database.schema.exceptions import ColumnNotFoundException
 
 
 def test_table_plan_generator_init(columns):

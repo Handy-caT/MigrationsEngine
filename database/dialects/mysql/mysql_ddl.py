@@ -1,7 +1,7 @@
 from abc import ABC
 
 from database.ddl_base.ddl_components_abstract import DDLComposite, DDLComponent
-from schema.column import Column
+from database.schema.column import Column
 
 
 class TransitionDLL(DDLComposite, ABC):
@@ -14,7 +14,7 @@ class TransitionDLL(DDLComposite, ABC):
 
 
 class ModifyColumn(DDLComposite):
-    def __init__(self, column: Column):
+    def __init__(self, column: Column, *args, **kwargs):
         super().__init__()
         self.column = column
 
@@ -23,7 +23,7 @@ class ModifyColumn(DDLComposite):
 
 
 class NotNull(TransitionDLL):
-    def __init__(self, not_null: bool = True):
+    def __init__(self, not_null: bool = True, *args, **kwargs):
         super().__init__()
         self.not_null = not_null
 
@@ -32,7 +32,7 @@ class NotNull(TransitionDLL):
 
 
 class Default(TransitionDLL):
-    def __init__(self, default: str):
+    def __init__(self, default: str, *args, **kwargs):
         super().__init__()
         self.default = default
 

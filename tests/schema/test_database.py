@@ -1,8 +1,8 @@
 import pytest
 
-from schema.database import Database
-from schema.exceptions import InvalidTableException
-from schema.table import Table
+from database.schema.database import Database
+from database.schema.exceptions import InvalidTableException
+from database.schema.table import Table
 
 
 def test_database_model_init(tables):
