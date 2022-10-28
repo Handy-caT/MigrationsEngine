@@ -48,11 +48,11 @@ class DDLComposite(DDLComponent, ABC):
     def __repr__(self):
         raise NotImplementedError
 
-    def __iter__(self, depth=0):
+    def __iter__(self):
         def gen(composite):
-            yield composite, depth
+            yield composite
             for component in composite.components:
-                iterator = component.__iter__(depth + 1)
+                iterator = component.__iter__()
                 try:
                     yield from iterator
                 except StopIteration:
@@ -80,9 +80,9 @@ class DDLLeaf(DDLComponent, ABC):
     def __repr__(self):
         raise NotImplementedError
 
-    def __iter__(self, depth=0):
+    def __iter__(self):
         def gen(leaf):
-            yield leaf, depth
+            yield leaf
 
         return gen(self)
 

@@ -15,7 +15,26 @@ class MySqlInterpreter(AbstractInterpreter):
 
     def interpret(self, component: DDLComponent):
         copy = deepcopy(component)
-        for component in copy:
-            component[0].accept(self.visitor)
+        command: list[str] = []
+        result: list[str] = []
+        ind = False
+        stack = []
 
-        return self.translator.translate(copy)
+        for i in copy:
+            i.accept(self.visitor)
+            if ind:
+                while i not in stack[-1]:
+                    stack.pop()
+                    command.pop()
+
+            if i.is_composite:
+                stack.append(i)
+                command.append(self.translator.translate(i))
+            else:
+                command.append(self.translator.translate(i))
+                result.append(self.translator.get_command(command))
+
+                command.pop()
+                ind = True
+
+        return result

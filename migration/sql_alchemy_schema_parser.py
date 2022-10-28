@@ -1,6 +1,6 @@
 import sqlalchemy.schema
 
-from migration.abstract_schema_parser import AbstractSchemaParser
+from migration.abstract.abstract_schema_parser import AbstractSchemaParser
 from database.schema.column import Column
 from database.schema.database import Database
 from database.schema.foreign_key import ForeignKey

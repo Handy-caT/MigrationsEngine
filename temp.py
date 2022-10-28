@@ -10,8 +10,8 @@
 # print(column.default)
 from copy import deepcopy
 
-from database.ddl_base.ddl_composites import AlterTable, AlterColumn
-from database.ddl_base.ddl_leafs import RenameColumn, ColumnNotNull, ColumnDefault
+from database.ddl_base.ddl_composites import AlterTable, AlterColumn, Composite
+from database.ddl_base.ddl_leafs import RenameColumn, ColumnNotNull, ColumnDefault, ShowColumns
 from database.dialects.mysql.mysql_visitor import MySqlVisitor
 from database.dialects.mysql.translate_dict import translate_dict_mysql
 from database.translator import Translator
@@ -36,18 +36,15 @@ column.add_component(ColumnDefault('xd'))
 table.add_component(column)
 table.add_component(RenameColumn('old_name', 'new_name'))
 
-# composite = Composite()
-# composite.add_component(table)
-# composite.add_component(ShowColumns('users'))
-#
-# for i in composite:
-#     print(i)
+composite = Composite()
+composite.add_component(table)
+composite.add_component(ShowColumns('users'))
 
 visitor = MySqlVisitor()
 
-print(table)
-print('------------------')
-print(deepcopy(table))
+for i in composite:
+    i.accept(visitor)
+    print(f'#{i}')
 
 translator = Translator(translate_dict_mysql)
 print(translator.translate(table))

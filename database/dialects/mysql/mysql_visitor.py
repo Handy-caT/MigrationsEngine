@@ -8,7 +8,7 @@ alter_column_dict = {
     'ColumnDefault': (lambda component: Default(component.default)),
 }
 
-d
+
 class MySqlVisitor(BaseVisitor):
     def visit_alter_table(self, node: AlterTable):
         for component in node.components:

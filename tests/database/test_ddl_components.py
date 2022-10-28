@@ -6,12 +6,12 @@ from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, ShowColumn
 
 def test_iter_empty():
     composite = Composite()
-    assert list(composite) == [(composite, 0)]
+    assert list(composite) == [composite]
 
 
 def test_iter_leaf():
     leaf = ColumnNotNull()
-    assert list(leaf) == [(leaf, 0)]
+    assert list(leaf) == [leaf]
 
 
 def test_iter_composite(column):
@@ -31,12 +31,12 @@ def test_iter_composite(column):
     composite.add_component(show_columns)
 
     assert list(composite) == [
-        (composite, 0),
-        (alter_table, 1),
-        (alter_column, 2),
-        (not_null, 3),
-        (default, 3),
-        (show_columns, 1)
+        composite,
+        alter_table,
+        alter_column,
+        not_null,
+        default,
+        show_columns,
     ]
 
 
