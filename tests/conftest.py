@@ -79,8 +79,8 @@ def table_plan_generator(columns):
 
 
 @pytest.fixture(scope='function')
-def column_plan_generator():
-    return ColumnPlanBuilder(column_name='id', table_name='test')
+def column_plan_generator(column):
+    return ColumnPlanBuilder(column=column, table_name='test')
 
 
 @pytest.fixture(scope='function')

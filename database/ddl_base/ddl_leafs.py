@@ -34,7 +34,7 @@ class ColumnType(DDLLeaf):
 
 class ColumnDefault(DDLLeaf):
 
-    def __init__(self, default: str):
+    def __init__(self, default: str = None):
         super().__init__()
         self.default = default
 

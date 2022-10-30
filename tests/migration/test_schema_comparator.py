@@ -14,7 +14,7 @@ def test_schema_comparator_columns_not_null(column):
 
     assert plan is not None
     assert plan == {
-        'ColumnName': column.name,
+        'Column': column,
         'NotNull': 'Add'
     }
 
@@ -30,7 +30,7 @@ def test_schema_comparator_columns_invalid_not_null(column):
 
     assert plan is not None
     assert plan == {
-        'ColumnName': column.name,
+        'Column': column,
         'NotNull': 'Drop'
     }
 
@@ -77,7 +77,7 @@ def test_schema_comparator_columns_with_different_default_add(column):
 
     assert plan is not None
     assert plan == {
-        'ColumnName': column.name,
+        'Column': column,
         'Default': {
             'Action': 'Add',
             'Value': 'different_default'
@@ -96,7 +96,7 @@ def test_schema_comparator_columns_with_different_default_drop(column):
 
     assert plan is not None
     assert plan == {
-        'ColumnName': column.name,
+        'Column': column,
         'Default': {
             'Action': 'Drop'
         }
@@ -125,7 +125,7 @@ def test_schema_comparator_tables_with_different_columns_add(table, column):
         'ColumnsPlan': [
             {
                 'Column': column.name,
-                'Action': 'Alter'
+                'Action': 'Add'
             }
         ],
         'IndexPlan': []
@@ -155,7 +155,7 @@ def test_schema_comparator_tables_with_different_columns_update(table, column):
                 'Column': column.name,
                 'Action': 'Update',
                 'Plan': {
-                    'ColumnName': column.name,
+                    'Column': column,
                     'Default': {
                         'Action': 'Add',
                         'Value': 'different_default'

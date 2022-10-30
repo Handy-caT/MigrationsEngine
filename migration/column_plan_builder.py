@@ -1,17 +1,18 @@
+from database.schema.column import Column
 from database.schema.foreign_key import ForeignKey
 
 
 class ColumnPlanBuilder:
-    def __init__(self, column_name: str, table_name: str) -> None:
-        self.column_name = column_name
+    def __init__(self, column: Column, table_name: str) -> None:
+        self.column = column
         self.table_name = table_name
         self._plan = {
-            'ColumnName': column_name,
+            'Column': column,
         }
 
     @classmethod
     def from_dict(cls, adict: dict) -> 'ColumnPlanBuilder':
-        return cls(adict['ColumnName'], adict['TableName'])
+        return cls(adict['Column'], adict['TableName'])
 
     def get_plan(self) -> dict:
         return self._plan

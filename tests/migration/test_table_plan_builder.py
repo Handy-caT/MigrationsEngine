@@ -37,14 +37,14 @@ def test_table_plan_from_dict(columns):
 
 
 def test_table_plan_add_column(table_plan_generator):
-    table_plan_generator.alter_column('id')
+    table_plan_generator.add_column('id')
 
     assert table_plan_generator.get_plan() == {
         'TableName': 'test',
         'ColumnsPlan': [
             {
                 'Column': 'id',
-                'Action': 'Alter'
+                'Action': 'Add'
             }
             ],
         'IndexPlan': []
@@ -53,7 +53,7 @@ def test_table_plan_add_column(table_plan_generator):
 
 def test_table_plan_add_column_not_found(table_plan_generator):
     with pytest.raises(ColumnNotFoundException):
-        table_plan_generator.alter_column('not_found')
+        table_plan_generator.add_column('not_found')
 
     assert table_plan_generator.get_plan() == {
         'TableName': 'test',

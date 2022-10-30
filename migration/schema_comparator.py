@@ -9,7 +9,7 @@ class SchemaComparator:
     @staticmethod
     def compare_columns(real_column: Column, model_column: Column) -> dict:
 
-        plan_builder = ColumnPlanBuilder(column_name=real_column.name, table_name='test')
+        plan_builder = ColumnPlanBuilder(column=real_column, table_name='test')
 
         if real_column.name != model_column.name:
             raise InvalidColumnException(f'Column name mismatch: real {real_column.name} != model {model_column.name}')
@@ -55,7 +55,7 @@ class SchemaComparator:
 
         for column in model_table:
             if column.name not in real_table.column_names:
-                plan_builder.alter_column(column.name)
+                plan_builder.add_column(column.name)
             else:
                 plan = SchemaComparator.compare_columns(real_table.get_column(column.name), column)
                 if len(plan) > 1:

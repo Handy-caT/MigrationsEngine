@@ -30,12 +30,12 @@ class TablePlanBuilder:
     def get_plan(self) -> dict:
         return self._plan
 
-    def alter_column(self, column_name: str) -> None:
+    def add_column(self, column_name: str) -> None:
         if not self._column_exists(column_name):
             raise ColumnNotFoundException(column_name)
         self._plan['ColumnsPlan'].append({
             'Column': column_name,
-            'Action': 'Alter'
+            'Action': 'Add'
         })
 
     def drop_column(self, column_name: str) -> None:
