@@ -1,19 +1,29 @@
 from database.ddl_base.ddl_components_abstract import DDLComponent
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn
-from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault
+from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, AddColumn, DropColumn, DropDefault, ColumnUnique
+from database.schema.index import Index
 
 
 def _default_plan_parser(plan):
     if plan['Action'] == 'Add':
         return ColumnDefault(plan['Value'])
     else:
-        return None
+        return DropDefault()
+
+
+def _unique_plan_parser(plan):
+    if plan['Action'] == 'Add':
+        index = plan['Index']
+        return ColumnUnique(index)
+    else:
+        return
 
 
 plan_dict = {
     'ColumnName': (lambda x: None),
     'NotNull': (lambda state: ColumnNotNull() if state == 'Add' else ColumnNotNull(False)),
     'Default': _default_plan_parser,
+    'Unique': (lambda x: ColumnUnique() if x == 'Add' else DropUnique()),
 }
 
 
@@ -39,6 +49,12 @@ class PlanParser:
                 alter_column.add_component(sub_component)
 
             ddl_component = alter_column
+        elif column_plan['Action'] == 'Add':
+            ddl_component = AddColumn(column_plan['Column'])
+        elif column_plan['Action'] == 'Drop':
+            ddl_component = DropColumn(column_plan['Column'].name)
+        else:
+            ddl_component = None
 
         return ddl_component
 

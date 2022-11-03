@@ -30,35 +30,35 @@ class TablePlanBuilder:
     def get_plan(self) -> dict:
         return self._plan
 
-    def add_column(self, column_name: str) -> None:
-        if not self._column_exists(column_name):
-            raise ColumnNotFoundException(column_name)
+    def add_column(self, column: Column) -> None:
+        if column not in self.columns:
+            raise ColumnNotFoundException(column)
         self._plan['ColumnsPlan'].append({
-            'Column': column_name,
+            'Column': column,
             'Action': 'Add'
         })
 
-    def drop_column(self, column_name: str) -> None:
-        if not self._column_exists(column_name):
-            raise ColumnNotFoundException(column_name)
+    def drop_column(self, column: Column) -> None:
+        if column not in self.columns:
+            raise ColumnNotFoundException(column)
         self._plan['ColumnsPlan'].append({
-            'Column': column_name,
+            'Column': column,
             'Action': 'Drop'
         })
 
-    def add_index(self, column_name: str) -> None:
-        if not self._column_exists(column_name):
-            raise ColumnNotFoundException(column_name)
+    def add_index(self, column: Column) -> None:
+        if column not in self.columns:
+            raise ColumnNotFoundException(column)
         self._plan['IndexPlan'].append({
-            'Column': column_name,
+            'Column': column,
             'Action': 'Add'
         })
 
-    def update_column(self, column_name: str, column_plan: dict) -> None:
-        if not self._column_exists(column_name):
-            raise ColumnNotFoundException(column_name)
+    def update_column(self, column: Column, column_plan: dict) -> None:
+        if column not in self.columns:
+            raise ColumnNotFoundException(column)
         self._plan['ColumnsPlan'].append({
-            'Column': column_name,
+            'Column': column,
             'Action': 'Update',
             'Plan': column_plan
         })

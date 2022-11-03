@@ -1,3 +1,4 @@
+from database.schema.index import Index
 from migration.column_plan_builder import ColumnPlanBuilder
 
 
@@ -30,10 +31,14 @@ def test_column_plan_generator_from_dict(column):
 
 def test_column_plan_add_unique(column_plan_generator, column):
     column_plan_generator.add_unique()
+    index = Index(f'{column.name}_unique', [column.name], True)
 
     assert column_plan_generator.get_plan() == {
         'Column': column,
-        'Unique': 'Add'
+        'Unique': {
+            'Action': 'Add',
+            'Index': index
+        }
     }
 
 
@@ -42,7 +47,10 @@ def test_column_plan_drop_unique(column_plan_generator, column):
 
     assert column_plan_generator.get_plan() == {
         'Column': column,
-        'Unique': 'Drop'
+        'Unique': {
+            'Action': 'Drop',
+            'Name': f'{column.name}_unique'
+        }
     }
 
 

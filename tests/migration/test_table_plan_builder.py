@@ -36,14 +36,14 @@ def test_table_plan_from_dict(columns):
     }
 
 
-def test_table_plan_add_column(table_plan_generator):
-    table_plan_generator.add_column('id')
+def test_table_plan_add_column(table_plan_generator, columns):
+    table_plan_generator.add_column(columns[0])
 
     assert table_plan_generator.get_plan() == {
         'TableName': 'test',
         'ColumnsPlan': [
             {
-                'Column': 'id',
+                'Column': columns[0],
                 'Action': 'Add'
             }
             ],
@@ -62,14 +62,14 @@ def test_table_plan_add_column_not_found(table_plan_generator):
     }
 
 
-def test_table_plan_drop_column(table_plan_generator):
-    table_plan_generator.drop_column('id')
+def test_table_plan_drop_column(table_plan_generator, columns):
+    table_plan_generator.drop_column(columns[0])
 
     assert table_plan_generator.get_plan() == {
         'TableName': 'test',
         'ColumnsPlan': [
             {
-                'Column': 'id',
+                'Column': columns[0],
                 'Action': 'Drop'
             }
             ],
@@ -88,15 +88,15 @@ def test_table_plan_drop_column_not_found(table_plan_generator):
     }
 
 
-def test_table_plan_add_index(table_plan_generator):
-    table_plan_generator.add_index('id')
+def test_table_plan_add_index(table_plan_generator, columns):
+    table_plan_generator.add_index(columns[0])
 
     assert table_plan_generator.get_plan() == {
         'TableName': 'test',
         'ColumnsPlan': [],
         'IndexPlan': [
             {
-                'Column': 'id',
+                'Column': columns[0],
                 'Action': 'Add'
             }
             ]
@@ -114,15 +114,15 @@ def test_table_plan_add_index_not_found(table_plan_generator):
     }
 
 
-def test_table_plan_update_column(table_plan_generator, column_plan_generator):
+def test_table_plan_update_column(table_plan_generator, column_plan_generator, columns):
     plan = column_plan_generator.get_plan()
-    table_plan_generator.update_column('id', plan)
+    table_plan_generator.update_column(columns[0], plan)
 
     assert table_plan_generator.get_plan() == {
         'TableName': 'test',
         'ColumnsPlan': [
             {
-                'Column': 'id',
+                'Column': columns[0],
                 'Action': 'Update',
                 'Plan': plan
             }

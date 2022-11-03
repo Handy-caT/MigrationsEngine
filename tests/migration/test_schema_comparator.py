@@ -124,7 +124,7 @@ def test_schema_comparator_tables_with_different_columns_add(table, column):
         'TableName': table.name,
         'ColumnsPlan': [
             {
-                'Column': column.name,
+                'Column': column,
                 'Action': 'Add'
             }
         ],
@@ -152,10 +152,10 @@ def test_schema_comparator_tables_with_different_columns_update(table, column):
         'TableName': table.name,
         'ColumnsPlan': [
             {
-                'Column': column.name,
+                'Column': model_column,
                 'Action': 'Update',
                 'Plan': {
-                    'Column': column,
+                    'Column': real_column,
                     'Default': {
                         'Action': 'Add',
                         'Value': 'different_default'

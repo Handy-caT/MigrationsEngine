@@ -55,10 +55,10 @@ class SchemaComparator:
 
         for column in model_table:
             if column.name not in real_table.column_names:
-                plan_builder.add_column(column.name)
+                plan_builder.add_column(column)
             else:
                 plan = SchemaComparator.compare_columns(real_table.get_column(column.name), column)
                 if len(plan) > 1:
-                    plan_builder.update_column(column.name, plan)
+                    plan_builder.update_column(column, plan)
 
         return plan_builder.get_plan()

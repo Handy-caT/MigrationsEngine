@@ -1,5 +1,6 @@
 from database.schema.column import Column
 from database.schema.foreign_key import ForeignKey
+from database.schema.index import Index
 
 
 class ColumnPlanBuilder:
@@ -18,10 +19,19 @@ class ColumnPlanBuilder:
         return self._plan
 
     def add_unique(self) -> None:
-        self._plan['Unique'] = 'Add'
+        index = Index(f'{self.column.name}_unique', [self.column.name], True)
+        self._plan['Unique'] = {
+            'Action': 'Add',
+            'Index': index
+        }
 
-    def drop_unique(self) -> None:
-        self._plan['Unique'] = 'Drop'
+    def drop_unique(self, unique_name: str = None) -> None:
+        if unique_name is None:
+            unique_name = f'{self.column.name}_unique'
+        self._plan['Unique'] = {
+            'Action': 'Drop',
+            'Name': unique_name
+        }
 
     def add_not_null(self) -> None:
         self._plan['NotNull'] = 'Add'

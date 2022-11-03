@@ -94,7 +94,7 @@ class AddForeignKey(DDLLeaf):
         return f'{self.__class__.__name__}({self.foreign_key!r})'
 
 
-class AddUnique(DDLLeaf):
+class ColumnUnique(DDLLeaf):
 
     def __init__(self, unique: Index):
         super().__init__()
@@ -155,3 +155,11 @@ class CreateIndex(DDLLeaf):
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.table_name}, {self.index!r})'
+
+
+class DropDefault(DDLLeaf):
+    def __init__(self):
+        super().__init__()
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}()'
