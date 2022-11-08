@@ -1,5 +1,5 @@
 from database.dialects.default.translate_dict import translate_dict_default
-from database.dialects.mysql.mysql_ddl import NotNull
+from database.dialects.mysql.mysql_ddl import NotNull, Default, ModifyColumn
 
 
 def _not_null(component: NotNull) -> str:
@@ -10,15 +10,9 @@ def _not_null(component: NotNull) -> str:
 
 
 translate_dict_mysql = {
-    'AlterTable': translate_dict_default['AlterTable'],
-    'AlterColumn': translate_dict_default['AlterColumn'],
-    'ColumnDefault': translate_dict_default['ColumnDefault'],
-    'ColumnNotNull': translate_dict_default['ColumnNotNull'],
-    'NotNull': _not_null,
-    'Default': (lambda component: 'DEFAULT %s' % component.default),
-    'ModifyColumn': (lambda component: 'MODIFY COLUMN %s %s' % (component.column.name, component.column.column_type)),
-    'RenameColumn': translate_dict_default['RenameColumn'],
-    'Leaf': translate_dict_default['Leaf'],
-    'Composite': translate_dict_default['Composite'],
-    'ShowColumns': translate_dict_default['ShowColumns'],
+    **translate_dict_default,
+    NotNull.__name__: _not_null,
+    Default.__name__: (lambda component: 'DEFAULT %s' % component.default),
+    ModifyColumn.__name__: (lambda component: 'MODIFY COLUMN %s %s' % (component.column.name,
+                                                                       component.column.column_type)),
 }

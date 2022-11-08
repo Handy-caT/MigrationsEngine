@@ -1,11 +1,11 @@
 from database.ddl_base.ddl_composites import AlterColumn, AlterTable
-from database.ddl_base.ddl_leafs import Leaf
+from database.ddl_base.ddl_leafs import Leaf, ColumnNotNull, ColumnDefault
 from database.dialects.mysql.mysql_ddl import ModifyColumn, NotNull, Default
 from database.abstract_visitor import BaseVisitor
 
 alter_column_dict = {
-    'ColumnNotNull': (lambda component: NotNull(component.not_null)),
-    'ColumnDefault': (lambda component: Default(component.default)),
+    ColumnNotNull.__name__: (lambda component: NotNull(component.not_null)),
+    ColumnDefault.__name__: (lambda component: Default(component.default)),
 }
 
 

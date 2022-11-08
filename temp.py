@@ -40,11 +40,12 @@ composite = Composite()
 composite.add_component(table)
 composite.add_component(ShowColumns('users'))
 
-visitor = MySqlVisitor()
+# visitor = MySqlVisitor()
+#
+# for i in composite:
+#     i.accept(visitor)
+#     print(f'#{i}')
+#
+# translator = Translator(translate_dict_mysql)
+# print(translator.translate(table))
 
-for i in composite:
-    i.accept(visitor)
-    print(f'#{i}')
-
-translator = Translator(translate_dict_mysql)
-print(translator.translate(table))

@@ -1,7 +1,7 @@
 from database.ddl_base.ddl_components_abstract import DDLComponent
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn
 from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, AddColumn, DropColumn, DropDefault, ColumnUnique
-from database.schema.index import Index
+from database.ddl_validator import DDLValidator
 
 
 def _default_plan_parser(plan):
@@ -23,7 +23,7 @@ plan_dict = {
     'ColumnName': (lambda x: None),
     'NotNull': (lambda state: ColumnNotNull() if state == 'Add' else ColumnNotNull(False)),
     'Default': _default_plan_parser,
-    'Unique': (lambda x: ColumnUnique() if x == 'Add' else DropUnique()),
+    'Unique': _unique_plan_parser,
 }
 
 
@@ -39,22 +39,25 @@ class PlanParser:
 
         return sub_components
 
-    def _parse_column(self, column_plan: dict) -> DDLComponent:
-        ddl_component = None
+    def _parse_column(self, column_plan: dict) -> list[DDLComponent]:
+        ddl_component = []
         if column_plan['Action'] == 'Update':
             column = column_plan['Column']
             alter_column = AlterColumn(column)
             sub_components = self._parse_column_plan(column_plan['Plan'])
             for sub_component in sub_components:
-                alter_column.add_component(sub_component)
+                if DDLValidator.can_be_child(sub_component, alter_column):
+                    alter_column.add_component(sub_component)
+                else:
+                    ddl_component.append(sub_component)
 
-            ddl_component = alter_column
+            ddl_component.append(alter_column)
         elif column_plan['Action'] == 'Add':
-            ddl_component = AddColumn(column_plan['Column'])
+            ddl_component.append(AddColumn(column_plan['Column']))
         elif column_plan['Action'] == 'Drop':
-            ddl_component = DropColumn(column_plan['Column'].name)
+            ddl_component.append(DropColumn(column_plan['Column'].name))
         else:
-            ddl_component = None
+            ddl_component = []
 
         return ddl_component
 
@@ -63,7 +66,7 @@ class PlanParser:
 
         for column_plan in plan['ColumnsPlan']:
             component = self._parse_column(column_plan)
-            if component is not None:
-                alter_table.add_component(component)
+            for sub_component in component:
+                alter_table.add_component(sub_component)
 
         return alter_table

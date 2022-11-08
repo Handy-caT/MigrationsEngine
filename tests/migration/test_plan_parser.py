@@ -1,9 +1,9 @@
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn
-from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, AddColumn, DropColumn
+from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, AddColumn, DropColumn, ColumnUnique
 from migration.plan_parser import PlanParser
 
 
-def test_plan_parser_update(plan_update, column):
+def test_plan_parser_update(plan_update, column, unique):
     plan_parser = PlanParser()
 
     alter_table = AlterTable('test')
@@ -13,6 +13,7 @@ def test_plan_parser_update(plan_update, column):
 
     alter_column.add_component(not_null)
     alter_column.add_component(default)
+    alter_table.add_component(ColumnUnique(unique))
     alter_table.add_component(alter_column)
 
     assert plan_parser.parse(plan_update) == alter_table

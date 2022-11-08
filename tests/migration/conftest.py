@@ -4,7 +4,12 @@ from database.schema.index import Index
 
 
 @pytest.fixture(scope='function')
-def plan_update(column):
+def unique(column):
+    return Index(f'{column.name}_unique', [column.name], True)
+
+
+@pytest.fixture(scope='function')
+def plan_update(column, unique):
     return {'TableName': 'test',
             'ColumnsPlan': [
                 {
@@ -19,7 +24,7 @@ def plan_update(column):
                         },
                         'Unique': {
                             'Action': 'Add',
-                            'Index': Index(f'{column.name}_unique', [column.name], True)
+                            'Index': unique
                         }
                     }
                 }
