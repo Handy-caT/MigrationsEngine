@@ -42,6 +42,31 @@ def test_column_plan_add_unique(column_plan_generator, column):
     }
 
 
+def test_column_plan_add_unique_with_name(column_plan_generator, column):
+    column_plan_generator.add_unique('unique_name')
+    index = Index('unique_name', [column.name], True)
+
+    assert column_plan_generator.get_plan() == {
+        'Column': column,
+        'Unique': {
+            'Action': 'Add',
+            'Index': index
+        }
+    }
+
+
+def test_column_plan_drop_unique_with_name(column_plan_generator, column):
+    column_plan_generator.drop_unique('unique_name')
+
+    assert column_plan_generator.get_plan() == {
+        'Column': column,
+        'Unique': {
+            'Action': 'Drop',
+            'Name': 'unique_name'
+        }
+    }
+
+
 def test_column_plan_drop_unique(column_plan_generator, column):
     column_plan_generator.drop_unique()
 
@@ -82,8 +107,7 @@ def test_column_plan_add_foreign_key(column_plan_generator, foreign_key, column)
         'Column': column,
         'ForeignKey': {
             'Action': 'Add',
-            'Table': 'test',
-            'Column': 'id'
+            'ForeignKey': foreign_key
         }
     }
 
@@ -94,7 +118,20 @@ def test_column_plan_drop_foreign_key(column_plan_generator, column):
     assert column_plan_generator.get_plan() == {
         'Column': column,
         'ForeignKey': {
-            'Action': 'Drop'
+            'Action': 'Drop',
+            'Name': f'{column.name}_foreign_key'
+        }
+    }
+
+
+def test_column_plan_drop_foreign_key_with_name(column_plan_generator, column):
+    column_plan_generator.drop_foreign_key('foreign_key_name')
+
+    assert column_plan_generator.get_plan() == {
+        'Column': column,
+        'ForeignKey': {
+            'Action': 'Drop',
+            'Name': 'foreign_key_name'
         }
     }
 

@@ -84,11 +84,11 @@ def column_plan_generator(column):
 
 
 @pytest.fixture(scope='function')
-def foreign_key():
+def foreign_key(column):
     return ForeignKey(
-        name='fk_test',
-        column_name='test_id',
-        key_table='test',
+        name=f'{column.name}_foreign_key',
+        column_name=column.name,
+        key_table='test_other',
         key_column='id'
     )
 

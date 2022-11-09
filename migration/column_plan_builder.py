@@ -18,8 +18,10 @@ class ColumnPlanBuilder:
     def get_plan(self) -> dict:
         return self._plan
 
-    def add_unique(self) -> None:
-        index = Index(f'{self.column.name}_unique', [self.column.name], True)
+    def add_unique(self, unique_name: str = None) -> None:
+        if unique_name is None:
+            unique_name = f'{self.column.name}_unique'
+        index = Index(unique_name, [self.column.name], True)
         self._plan['Unique'] = {
             'Action': 'Add',
             'Index': index
@@ -45,14 +47,20 @@ class ColumnPlanBuilder:
     def add_foreign_key(self, foreign_key: ForeignKey) -> None:
         self._plan['ForeignKey'] = {
             'Action': 'Add',
-            'Table': foreign_key.key_table,
-            'Column': foreign_key.key_column,
+            'ForeignKey': foreign_key
         }
 
-    def drop_foreign_key(self) -> None:
-        self._plan['ForeignKey'] = {
-            'Action': 'Drop'
-        }
+    def drop_foreign_key(self, fk_name: str = None) -> None:
+        if fk_name is None:
+            self._plan['ForeignKey'] = {
+                'Action': 'Drop',
+                'Name': f'{self.column.name}_foreign_key'
+            }
+        else:
+            self._plan['ForeignKey'] = {
+                'Action': 'Drop',
+                'Name': fk_name
+            }
 
     def drop_not_null(self) -> None:
         self._plan['NotNull'] = 'Drop'

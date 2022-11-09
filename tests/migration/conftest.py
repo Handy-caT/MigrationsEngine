@@ -9,7 +9,7 @@ def unique(column):
 
 
 @pytest.fixture(scope='function')
-def plan_update(column, unique):
+def plan_update_add(column, unique, foreign_key):
     return {'TableName': 'test',
             'ColumnsPlan': [
                 {
@@ -25,6 +25,38 @@ def plan_update(column, unique):
                         'Unique': {
                             'Action': 'Add',
                             'Index': unique
+                        },
+                        'ForeignKey': {
+                            'Action': 'Add',
+                            'ForeignKey': foreign_key
+                        }
+                    }
+                }
+            ],
+            'IndexPlan': []
+            }
+
+
+@pytest.fixture(scope='function')
+def plan_update_drop(column, unique):
+    return {'TableName': 'test',
+            'ColumnsPlan': [
+                {
+                    'Column': column,
+                    'Action': 'Update',
+                    'Plan': {
+                        'ColumnName': column.name,
+                        'NotNull': 'Drop',
+                        'Default': {
+                            'Action': 'Drop',
+                        },
+                        'Unique': {
+                            'Action': 'Drop',
+                            'Name': unique.name
+                        },
+                        'ForeignKey': {
+                            'Action': 'Drop',
+                            'Name': f'{column.name}_foreign_key'
                         }
                     }
                 }

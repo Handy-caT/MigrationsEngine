@@ -1,6 +1,7 @@
 from database.ddl_base.ddl_components_abstract import DDLComponent
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn
-from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, AddColumn, DropColumn, DropDefault, ColumnUnique
+from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, AddColumn, DropColumn, ColumnUnique, \
+    DropConstraint, AddForeignKey
 from database.ddl_validator import DDLValidator
 
 
@@ -8,7 +9,7 @@ def _default_plan_parser(plan):
     if plan['Action'] == 'Add':
         return ColumnDefault(plan['Value'])
     else:
-        return DropDefault()
+        return ColumnDefault()
 
 
 def _unique_plan_parser(plan):
@@ -16,7 +17,14 @@ def _unique_plan_parser(plan):
         index = plan['Index']
         return ColumnUnique(index)
     else:
-        return
+        return DropConstraint(plan['Name'])
+
+
+def _foreign_key_plan_parser(plan):
+    if plan['Action'] == 'Add':
+        return AddForeignKey(plan['ForeignKey'])
+    else:
+        return DropConstraint(plan['Name'])
 
 
 plan_dict = {
@@ -24,6 +32,7 @@ plan_dict = {
     'NotNull': (lambda state: ColumnNotNull() if state == 'Add' else ColumnNotNull(False)),
     'Default': _default_plan_parser,
     'Unique': _unique_plan_parser,
+    'ForeignKey': _foreign_key_plan_parser,
 }
 
 
