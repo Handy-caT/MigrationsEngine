@@ -26,6 +26,7 @@ class MySqlInterpreter(AbstractInterpreter):
                 while i not in stack[-1]:
                     stack.pop()
                     command.pop()
+                ind = False
 
             if i.is_composite:
                 stack.append(i)
