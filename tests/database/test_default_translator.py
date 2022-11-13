@@ -1,5 +1,5 @@
 from database.ddl_base.ddl_composites import Composite, AlterColumn, AlterTable
-from database.ddl_base.ddl_leafs import ShowColumns, ColumnNotNull, ColumnDefault, Leaf
+from database.ddl_base.ddl_leafs import ShowColumns, ColumnNotNull, ColumnDefault, Leaf, AddColumn
 
 
 def test_line_translate(default_translator, column):

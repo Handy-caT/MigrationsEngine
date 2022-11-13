@@ -8,7 +8,7 @@ def test_composite_alter_column_translate(composite_ddl, mysql_translator, mysql
     assert result == [
         '',
         'ALTER TABLE users',
-        'MODIFY COLUMN password varchar(40)',
+        'MODIFY COLUMN password VARCHAR(40)',
         'DEFAULT xd',
         'NOT NULL',
         '',

@@ -8,7 +8,7 @@ class Column:
                  default: Optional[str], extra: Optional[str],
                  foreign_key: Optional[List[ForeignKey]] = None):
         self.name = name
-        self.column_type = column_type.lower()
+        self.column_type = column_type.upper()
         self.not_null = not_null
         self.key = key
         self.default = default

@@ -16,7 +16,7 @@ def plan_update_add(column, unique, foreign_key):
                     'Column': column,
                     'Action': 'Update',
                     'Plan': {
-                        'ColumnName': column.name,
+                        'Column': column,
                         'NotNull': 'Add',
                         'Default': {
                             'Action': 'Add',
@@ -45,7 +45,7 @@ def plan_update_drop(column, unique):
                     'Column': column,
                     'Action': 'Update',
                     'Plan': {
-                        'ColumnName': column.name,
+                        'Column': column,
                         'NotNull': 'Drop',
                         'Default': {
                             'Action': 'Drop',

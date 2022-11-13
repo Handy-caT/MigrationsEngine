@@ -1,5 +1,7 @@
 import pytest
 
+from database.dialects.default.translate_dict import translate_dict_default
+from database.translator import Translator
 from migration.column_plan_builder import ColumnPlanBuilder
 from migration.sql_alchemy_schema_parser import SQLAlchemySchemaParser
 from migration.table_plan_builder import TablePlanBuilder
@@ -42,7 +44,7 @@ def columns():
 def column():
     return Column(
         name='password',
-        column_type='varchar(40)',
+        column_type='VARCHAR(40)',
         not_null=False,
         key=None,
         default=None,
@@ -74,6 +76,16 @@ def table(columns):
 
 
 @pytest.fixture(scope='function')
+def column_updated(table):
+    column = table.columns[1].__copy__()
+    column.default = 'test'
+    column.not_null = True
+    column.key = 'UNI'
+
+    return column
+
+
+@pytest.fixture(scope='function')
 def table_plan_generator(columns):
     return TablePlanBuilder('test', columns)
 
@@ -97,5 +109,9 @@ def foreign_key(column):
 def parser():
     return SQLAlchemySchemaParser()
 
+
+@pytest.fixture(scope='function')
+def default_translator():
+    return Translator(translate_dict_default)
 
 

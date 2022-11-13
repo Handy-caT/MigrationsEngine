@@ -5,7 +5,7 @@ def test_parse_column(parser):
     column = parser.parse_column(sqlalchemy.schema.Column('id', sqlalchemy.Integer))
 
     assert column.name == 'id'
-    assert column.column_type == 'integer'
+    assert column.column_type == 'integer'.upper()
     assert column.default is None
     assert column.not_null is False
     assert column.foreign_key is None

@@ -1,6 +1,6 @@
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn
 from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, AddColumn, DropColumn, ColumnUnique, \
-    DropConstraint, AddForeignKey
+    DropConstraint, AddForeignKey, DropDefault
 from migration.plan_parser import PlanParser
 
 
@@ -27,7 +27,7 @@ def test_plan_parser_update_drop(plan_update_drop, column, unique, foreign_key):
     alter_table = AlterTable('test')
     alter_column = AlterColumn(column)
     not_null = ColumnNotNull(not_null=False)
-    default = ColumnDefault()
+    default = DropDefault()
 
     alter_column.add_component(not_null)
     alter_column.add_component(default)

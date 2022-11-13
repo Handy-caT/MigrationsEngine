@@ -34,12 +34,21 @@ class ColumnType(DDLLeaf):
 
 class ColumnDefault(DDLLeaf):
 
-    def __init__(self, default: str = None):
+    def __init__(self, default: str):
         super().__init__()
         self.default = default
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.default!r})'
+
+
+class DropDefault(DDLLeaf):
+
+    def __init__(self):
+        super().__init__()
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}()'
 
 
 class ColumnNotNull(DDLLeaf):

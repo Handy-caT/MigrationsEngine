@@ -1,12 +1,13 @@
 from database.ddl_base.ddl_components_abstract import DDLComponent
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn, Composite
 from database.ddl_base.ddl_leafs import AddColumn, ColumnNotNull, ColumnDefault, DropColumn, ColumnUnique, \
-    AddForeignKey, DropConstraint, ShowColumns, Leaf, ColumnType, RenameColumn, RenameTable, DropTable
+    AddForeignKey, DropConstraint, ShowColumns, Leaf, ColumnType, RenameColumn, RenameTable, DropTable, DropDefault
 
 _alter_column_child_list = [
     ColumnNotNull,
     ColumnDefault,
     ColumnType,
+    DropDefault,
     Leaf,
 ]
 _alter_table_child_list = [

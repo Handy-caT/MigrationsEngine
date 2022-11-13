@@ -13,7 +13,7 @@ def test_column_model_init():
     column = Column(name, column_type, not_null, key, default, extra, foreign_key)
 
     assert column.name == name
-    assert column.column_type == column_type.lower()
+    assert column.column_type == column_type.upper()
     assert column.not_null == not_null
     assert column.key == key
     assert column.default == default
@@ -35,7 +35,7 @@ def test_column_model_from_dict():
     column = Column.from_dict(adict)
 
     assert column.name == adict['Name']
-    assert column.column_type == adict['Type'].lower()
+    assert column.column_type == adict['Type'].upper()
     assert column.not_null == adict['NotNull']
     assert column.key == adict['Key']
     assert column.default == adict['Default']

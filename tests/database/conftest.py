@@ -39,11 +39,6 @@ def alter_table(column):
 
 
 @pytest.fixture(scope='function')
-def default_translator():
-    return Translator(translate_dict_default)
-
-
-@pytest.fixture(scope='function')
 def mysql_translator():
     return Translator(translate_dict_mysql)
 
