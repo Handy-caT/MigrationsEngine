@@ -65,7 +65,7 @@ class DDLValidator:
                 ind = False
 
             if not DDLValidator.can_be_child(i, stack[-1]):
-                raise ValidationException(i,stack[-1],component)
+                raise ValidationException(i, stack[-1], component)
 
             if i.is_composite:
                 stack.append(i)
