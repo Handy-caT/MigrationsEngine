@@ -17,17 +17,17 @@ from database.dialects.mysql.translate_dict import translate_dict_mysql
 from database.translator import Translator
 from database.schema.column import Column
 
-#temp = '%s %s'
-#print(temp % ('hello', 'xd'))
+# temp = '%s %s'
+# print(temp % ('hello', 'xd'))
 
 column_obj = Column(
-        name='password',
-        column_type='varchar(40)',
-        not_null=False,
-        key=None,
-        default=None,
-        extra=None
-    )
+    name='password',
+    column_type='varchar(40)',
+    not_null=False,
+    key=None,
+    default=None,
+    extra=None
+)
 
 table = AlterTable('users')
 column = AlterColumn(column_obj)
@@ -48,4 +48,16 @@ composite.add_component(ShowColumns('users'))
 #
 # translator = Translator(translate_dict_mysql)
 # print(translator.translate(table))
+
+# print(composite.__repr__())
+import re
+regex = r'([A-Z][a-zA-Z]*\()(.*)(\))'
+regex2 = r'([A-Z][a-zA-Z]*\()([^()]*)(\))'
+
+matches = re.search(regex, "HelloWorld('users', 'id', ColumnNotNull(), ColumnDefault('xd'))")
+next_one = matches.group(2)
+print(next_one)
+matches = re.findall(regex2, next_one)
+print(matches)
+print(len(matches))
 

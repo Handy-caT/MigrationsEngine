@@ -45,3 +45,17 @@ def test_copy_composite(composite_ddl):
 
     assert copy == composite_ddl
     assert copy is not composite_ddl
+
+
+def test_composite_constructor():
+    list_of_components = [
+        ShowColumns('users'),
+        ShowColumns('yolo'),
+    ]
+
+    composite = Composite(list_of_components)
+
+    assert list(composite) == [
+        composite,
+        *list_of_components,
+        ]

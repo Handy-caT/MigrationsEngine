@@ -27,8 +27,8 @@ class DDLComponent(ABC, AbstractNode):
 
 class DDLComposite(DDLComponent, ABC):
 
-    def __init__(self):
-        self._components: list[DDLComponent] = []
+    def __init__(self, *args, **kwargs):
+        self._components: list[DDLComponent] = [*args]
 
     @property
     def is_composite(self):
