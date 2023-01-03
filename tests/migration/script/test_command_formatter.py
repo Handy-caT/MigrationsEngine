@@ -1,5 +1,5 @@
 from migration.script.command_formatter import CommandFormatter, split_arguments_by_commas, \
-    split_command_by_name_and_brackets
+    split_command_by_name_and_brackets, is_command
 
 
 def test_command_formatter_brackets():
@@ -14,8 +14,8 @@ def test_command_formatter_command():
 
 def test_command_formatter_command_with_brackets():
     command = 'AlterColumn("users", "id", ColumnNotNull(), ColumnDefault("xd"))'
-    assert CommandFormatter.format_command(command) == ['AlterColumn("users", "id", ',
-                                                        'ColumnNotNull(), ',
+    assert CommandFormatter.format_command(command) == ['AlterColumn("users", "id",',
+                                                        'ColumnNotNull(),',
                                                         'ColumnDefault("xd"))']
 
 
@@ -43,3 +43,14 @@ def test_split_command_by_name_and_brackets():
     assert split_command_by_name_and_brackets(command) == ['AlterColumn(',
                                                            '"users", "id", ColumnNotNull(), '
                                                            'ColumnDefault("xd")', ')']
+
+
+def test_is_command():
+    command = 'AlterColumn("users", "id", ColumnNotNull(), ColumnDefault("xd"))'
+    assert is_command(command) is True
+
+    command = 'ShowColumn("users")'
+    assert is_command(command) is True
+
+    command = '"users"'
+    assert is_command(command) is False
