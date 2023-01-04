@@ -7,7 +7,7 @@ def test_command_formatter_brackets():
     assert CommandFormatter.format_command(command) == ['ShowColumn("users")']
 
 
-def test_command_formatter_command():
+def test_command_formatter_command_one_command_argument():
     command = 'AlterColumn("users", "id", ColumnNotNull())'
     assert CommandFormatter.format_command(command) == ['AlterColumn("users", "id", ColumnNotNull())']
 
@@ -54,3 +54,27 @@ def test_is_command():
 
     command = '"users"'
     assert is_command(command) is False
+
+    command = 'SubCommand1()'
+    assert is_command(command) is True
+
+
+def test_split_long_command_format():
+    command = 'AlterColumn("users", "id", "ColumnNotNull", "ColumnDefault", "ShowColumns_users", ' \
+              ' ColumnNotNull(), ColumnDefault("xd"))'
+    assert CommandFormatter.format_command(command) == ['AlterColumn("users", "id", "ColumnNotNull", "ColumnDefault",',
+                                                        '"ShowColumns_users",',
+                                                        'ColumnNotNull(),',
+                                                        'ColumnDefault("xd"))']
+
+
+def test_split_long_command_format_with_long_arguments():
+    command = 'AlterColumn("users", "id", "ColumnNotNull", "ColumnDefault", "ShowColumns_users", ' \
+              ' Command("parameter1", "parameter2", SubCommand1(), SubCommand2("parameter")), ColumnDefault("xd"))'
+    assert CommandFormatter.format_command(command) == ['AlterColumn("users", "id", "ColumnNotNull", "ColumnDefault",',
+                                                        '"ShowColumns_users",',
+                                                        'Command("parameter1", "parameter2",',
+                                                        'SubCommand1(),',
+                                                        'SubCommand2("parameter")),',
+                                                        'ColumnDefault("xd"))']
+

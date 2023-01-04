@@ -1,7 +1,7 @@
 import re
 
-class_with_inner_brackets = re.compile(r'([A-Z][a-zA-Z]*\()(.*)(\))')
-class_without_inner_brackets = re.compile(r'([A-Z][a-zA-Z]*\()([^()]*)(\))')
+class_with_inner_brackets = re.compile(r'([A-Z][a-zA-Z1-9]*\()(.*)(\))')
+class_without_inner_brackets = re.compile(r'([A-Z][a-zA-Z1-9]*\()([^()]*)(\))')
 
 
 def is_command(command: str) -> bool:
@@ -36,7 +36,7 @@ def split_command_by_name_and_brackets(command: str) -> list[str]:
         return [matches.group(1), matches.group(2), matches.group(3)]
 
 
-def long_arguments_formatter(command: str) -> list[str]:
+def long_command_formatter(command: str) -> list[str]:
     if len(command) > 79:
         splitted = split_command_by_name_and_brackets(command)
         result = [splitted[0]]
@@ -67,18 +67,24 @@ def format_command_with_inner_brackets(command: str) -> list[str]:
     inner_part = matches.group(2)
     splitted_inner_part = split_arguments_by_commas(inner_part)
 
-    next_line = splitted_inner_part[0]
+    next_line = result[0] + splitted_inner_part[0]
+    result.pop(0)
+
     for i in range(1, len(splitted_inner_part)):
         if not is_command(splitted_inner_part[i]):
-            next_line += ', ' + splitted_inner_part[i]
+            if len(next_line) + len(splitted_inner_part[i]) + 2 > 79:
+                result.append(next_line + ',')
+                next_line = splitted_inner_part[i]
+            else:
+                next_line += ', ' + splitted_inner_part[i]
         else:
             if next_line != "":
                 result.append(next_line + ',')
                 next_line = ""
-            result.append(splitted_inner_part[i] + ',')
-
-    result[0] += result[1]
-    result.pop(1)
+            formatted_command = CommandFormatter.format_command(splitted_inner_part[i])
+            for part in formatted_command:
+                result.append(part)
+            result[-1] += ','
 
     if is_command(splitted_inner_part[-1]):
         result[-1] = result[-1][:-1]
@@ -96,4 +102,4 @@ class CommandFormatter:
         if brackets > 2:
             return format_command_with_inner_brackets(command)
         else:
-            return long_arguments_formatter(command)
+            return long_command_formatter(command)
