@@ -1,5 +1,5 @@
 from migration.script.command_formatter import CommandFormatter, split_arguments_by_commas, \
-    split_command_by_name_and_brackets, is_command
+    split_command_by_name_and_brackets, has_command, command_start
 
 
 def test_command_formatter_brackets():
@@ -47,16 +47,16 @@ def test_split_command_by_name_and_brackets():
 
 def test_is_command():
     command = 'AlterColumn("users", "id", ColumnNotNull(), ColumnDefault("xd"))'
-    assert is_command(command) is True
+    assert has_command(command) is True
 
     command = 'ShowColumn("users")'
-    assert is_command(command) is True
+    assert has_command(command) is True
 
     command = '"users"'
-    assert is_command(command) is False
+    assert has_command(command) is False
 
     command = 'SubCommand1()'
-    assert is_command(command) is True
+    assert has_command(command) is True
 
 
 def test_split_long_command_format():
@@ -78,3 +78,10 @@ def test_split_long_command_format_with_long_arguments():
                                                         'SubCommand2("parameter")),',
                                                         'ColumnDefault("xd"))']
 
+
+def test_class_start():
+    command = 'AlterColumn("users", "id", ColumnNotNull(), ColumnDefault("xd"))'
+    assert command_start(command) == 'AlterColumn('
+
+    command = 'ShowColumn("users")'
+    assert command_start(command) == 'ShowColumn('

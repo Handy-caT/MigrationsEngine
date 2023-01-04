@@ -2,9 +2,15 @@ import re
 
 class_with_inner_brackets = re.compile(r'([A-Z][a-zA-Z1-9]*\()(.*)(\))')
 class_without_inner_brackets = re.compile(r'([A-Z][a-zA-Z1-9]*\()([^()]*)(\))')
+class_start = re.compile(r'([A-Z][a-zA-Z1-9]*\()')
 
 
-def is_command(command: str) -> bool:
+def command_start(command: str) -> str:
+    matches = re.search(class_start, command)
+    return matches.group(1)
+
+
+def has_command(command: str) -> bool:
     matches = re.search(class_with_inner_brackets, command)
     if matches:
         return True
@@ -71,7 +77,7 @@ def format_command_with_inner_brackets(command: str) -> list[str]:
     result.pop(0)
 
     for i in range(1, len(splitted_inner_part)):
-        if not is_command(splitted_inner_part[i]):
+        if not has_command(splitted_inner_part[i]):
             if len(next_line) + len(splitted_inner_part[i]) + 2 > 79:
                 result.append(next_line + ',')
                 next_line = splitted_inner_part[i]
@@ -86,7 +92,7 @@ def format_command_with_inner_brackets(command: str) -> list[str]:
                 result.append(part)
             result[-1] += ','
 
-    if is_command(splitted_inner_part[-1]):
+    if has_command(splitted_inner_part[-1]):
         result[-1] = result[-1][:-1]
 
     result[-1] += ')'
