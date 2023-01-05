@@ -1,7 +1,7 @@
 from migration.script.command_formatter import command_start
 
-_tab = '    '
 _space = ' '
+_tab = _space * 4
 
 
 class TabFormatter:
