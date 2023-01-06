@@ -8,14 +8,10 @@
 # print(column.type)
 #
 # print(column.default)
-from copy import deepcopy
-
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn, Composite
 from database.ddl_base.ddl_leafs import RenameColumn, ColumnNotNull, ColumnDefault, ShowColumns
-from database.dialects.mysql.mysql_visitor import MySqlVisitor
-from database.dialects.mysql.translate_dict import translate_dict_mysql
-from database.translator import Translator
 from database.schema.column import Column
+from migration.script.script_builder.script_templates import get_info
 
 # temp = '%s %s'
 # print(temp % ('hello', 'xd'))
@@ -50,14 +46,20 @@ composite.add_component(ShowColumns('users'))
 # print(translator.translate(table))
 
 # print(composite.__repr__())
-import re
-regex = r'([A-Z][a-zA-Z]*\()(.*)(\))'
-regex2 = r'([A-Z][a-zA-Z]*\()([^()]*)(\))'
+# import re
+# regex = r'([A-Z][a-zA-Z]*\()(.*)(\))'
+# regex2 = r'([A-Z][a-zA-Z]*\()([^()]*)(\))'
+#
+# matches = re.search(regex, "HelloWorld('users', 'id', ColumnNotNull(), ColumnDefault('xd'))")
+# next_one = matches.group(2)
+# print(next_one)
+# matches = re.findall(regex2, next_one)
+# print(matches)
+# print(len(matches))
 
-matches = re.search(regex, "HelloWorld('users', 'id', ColumnNotNull(), ColumnDefault('xd'))")
-next_one = matches.group(2)
-print(next_one)
-matches = re.findall(regex2, next_one)
-print(matches)
-print(len(matches))
+#print(table.__repr__())
+#print(CommandFormatter.format_command(table.__repr__()))
 
+
+# print(len('AlterColumn("users", "id", "ColumnNotNull", "ColumnDefault", "ShowColumns_users")'))
+print(get_info('xd'))

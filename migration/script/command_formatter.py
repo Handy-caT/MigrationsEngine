@@ -1,5 +1,7 @@
 import re
 
+from typing import List
+
 class_with_inner_brackets = re.compile(r'([A-Z][a-zA-Z1-9]*\()(.*)(\))')
 class_without_inner_brackets = re.compile(r'([A-Z][a-zA-Z1-9]*\()([^()]*)(\))')
 class_start = re.compile(r'([A-Z][a-zA-Z1-9]*\()')
@@ -18,7 +20,7 @@ def has_command(command: str) -> bool:
         return False
 
 
-def split_arguments_by_commas(command: str) -> list[str]:
+def split_arguments_by_commas(command: str) -> List[str]:
     parts = command.split(',')
     parts = [part.strip() for part in parts]
 
@@ -33,7 +35,7 @@ def split_arguments_by_commas(command: str) -> list[str]:
     return parts
 
 
-def split_command_by_name_and_brackets(command: str) -> list[str]:
+def split_command_by_name_and_brackets(command: str) -> List[str]:
     matches = re.search(class_with_inner_brackets, command)
     if matches:
         return [matches.group(1), matches.group(2), matches.group(3)]
@@ -42,7 +44,7 @@ def split_command_by_name_and_brackets(command: str) -> list[str]:
         return [matches.group(1), matches.group(2), matches.group(3)]
 
 
-def long_command_formatter(command: str) -> list[str]:
+def long_command_formatter(command: str) -> List[str]:
     if len(command) > 79:
         splitted = split_command_by_name_and_brackets(command)
         result = [splitted[0]]
@@ -64,7 +66,7 @@ def long_command_formatter(command: str) -> list[str]:
         return [command]
 
 
-def format_command_with_inner_brackets(command: str) -> list[str]:
+def format_command_with_inner_brackets(command: str) -> List[str]:
     result = []
 
     matches = re.search(class_with_inner_brackets, command)
@@ -103,7 +105,7 @@ def format_command_with_inner_brackets(command: str) -> list[str]:
 class CommandFormatter:
 
     @staticmethod
-    def format_command(command: str) -> list[str]:
+    def format_command(command: str) -> List[str]:
         brackets = command.count('(')
         if brackets > 2:
             return format_command_with_inner_brackets(command)

@@ -1,3 +1,5 @@
+from typing import List
+
 from database.ddl_base.ddl_components_abstract import DDLComponent
 from database.ddl_base.ddl_composites import Composite
 from database.translator import Translator
@@ -9,14 +11,14 @@ class TranslatorToCommand(Translator):
     def __init__(self, dialect: str = 'command'):
         super().__init__({}, dialect)
 
-    def _translate_composite(self, component: Composite) -> list[str]:
+    def _translate_composite(self, component: Composite) -> List[str]:
         result = []
         for component in component.components:
             result.extend(self.translate(component))
 
         return result
 
-    def translate(self, component: DDLComponent) -> list[str]:
+    def translate(self, component: DDLComponent) -> List[str]:
         if isinstance(component, Composite):
             return self._translate_composite(component)
         else:
@@ -27,5 +29,5 @@ class TranslatorToCommand(Translator):
             return result
 
     @staticmethod
-    def get_command(command: list[str]) -> str:
+    def get_command(command: List[str]) -> str:
         raise NotImplementedError

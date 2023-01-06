@@ -2,6 +2,8 @@ import abc
 from abc import ABC
 from copy import deepcopy
 
+from typing import List
+
 from database.abstract_visitor import AbstractNode, BaseVisitor
 
 
@@ -38,7 +40,7 @@ class DDLComposite(DDLComponent, ABC):
         self._components.append(component)
 
     @property
-    def components(self) -> list[DDLComponent]:
+    def components(self) -> List[DDLComponent]:
         return self._components
 
     def remove_component(self, component: DDLComponent):
