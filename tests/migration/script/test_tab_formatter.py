@@ -12,7 +12,7 @@ def test_add_tabs():
     assert TabFormatter.add_tabs(command, 2) == ['        FirstLine', '        SecondLine']
 
     command = ['  FirstLine', ' SecondLine  ']
-    assert TabFormatter.add_tabs(command, 1) == ['    FirstLine', '    SecondLine']
+    assert TabFormatter.add_tabs(command, 1) == ['      FirstLine', '     SecondLine']
 
 
 def test_add_spaces():
@@ -26,7 +26,7 @@ def test_add_spaces():
     assert TabFormatter.add_spaces(command, 2) == ['  FirstLine', '  SecondLine']
 
     command = ['  FirstLine', ' SecondLine  ']
-    assert TabFormatter.add_spaces(command, 1) == [' FirstLine', ' SecondLine']
+    assert TabFormatter.add_spaces(command, 1) == ['   FirstLine', '  SecondLine']
 
 
 def test_format_command():

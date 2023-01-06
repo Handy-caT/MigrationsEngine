@@ -11,14 +11,14 @@ class TabFormatter:
     def add_tabs(command: List[str], tabs: int) -> List[str]:
         result = []
         for line in command:
-            result.append(_tab * tabs + line.strip())
+            result.append(_tab * tabs + line.rstrip())
         return result
 
     @staticmethod
     def add_spaces(command: List[str], space: int) -> List[str]:
         result = []
         for line in command:
-            result.append(_space * space + line.strip())
+            result.append(_space * space + line.rstrip())
         return result
 
     @staticmethod
