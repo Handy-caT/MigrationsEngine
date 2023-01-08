@@ -1,6 +1,7 @@
 import os.path
 from typing import List
 
+from migration.script.script_builder.import_formatter import ImportFormatter
 from migration.script.script_builder.script_templates import get_info, get_upgrade_template
 from migration.script.tab_formatter import TabFormatter
 
@@ -22,7 +23,14 @@ class ScriptBuilder:
 
     def build_upgrade(self) -> None:
         upgrade = get_upgrade_template()
+        self.script_file.write('\n\n')
         self.script_file.write(upgrade + '\n')
+
+    def build_imports(self, command: List[str]):
+        imports = ImportFormatter.format_imports(command)
+
+        for line in imports:
+            self.script_file.write(line + '\n')
 
     def build_command(self, command: List[str]) -> None:
         command = TabFormatter.add_tabs(command, 1)

@@ -36,6 +36,7 @@ def test_script_builder(composite_ddl):
     result = translator.translate(composite_ddl)
 
     script_builder.build_info()
+    script_builder.build_imports(result)
     script_builder.build_upgrade()
     script_builder.build_command(result)
     script_builder.close()
