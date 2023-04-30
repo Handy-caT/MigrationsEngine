@@ -2,6 +2,7 @@ from copy import deepcopy
 
 from database.ddl_base.ddl_composites import Composite, AlterTable, AlterColumn
 from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, ShowColumns
+from database.schema.column import Column
 
 
 def test_iter_empty():
@@ -58,4 +59,14 @@ def test_composite_constructor():
     assert list(composite) == [
         composite,
         *list_of_components,
-        ]
+    ]
+
+
+def test_composite_eq(composite_ddl):
+    composite = Composite(AlterTable('users', False,
+                                     AlterColumn(Column('password', 'VARCHAR(40)', False, None, None, None, None),
+                                                 ColumnNotNull(True),
+                                                 ColumnDefault('xd'))),
+                          ShowColumns('users'))
+
+    assert composite == composite_ddl

@@ -8,6 +8,9 @@
 # print(column.type)
 #
 # print(column.default)
+import re
+from os import mkdir
+
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn, Composite
 from database.ddl_base.ddl_leafs import RenameColumn, ColumnNotNull, ColumnDefault, ShowColumns
 from database.schema.column import Column
@@ -62,4 +65,7 @@ composite.add_component(ShowColumns('users'))
 
 
 # print(len('AlterColumn("users", "id", "ColumnNotNull", "ColumnDefault", "ShowColumns_users")'))
-print(get_info('xd'))
+#print(get_info('xd'))
+a = None
+exec("a = ShowColumns('users')")
+print(a)
