@@ -1,4 +1,4 @@
-from migration.script.tab_formatter import TabFormatter
+from migration.script.script_builder.tab_formatter import TabFormatter
 
 
 def test_add_tabs():

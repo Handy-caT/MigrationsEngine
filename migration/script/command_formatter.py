@@ -103,9 +103,23 @@ def format_command_with_inner_brackets(command: str) -> List[str]:
 
 
 class CommandFormatter:
+    """
+    This class is used to format long commands.
+    Main function is to make commands look prettier and more readable.
+    """
 
     @staticmethod
     def format_command(command: str) -> List[str]:
+        """
+        Formats command as a long string and divides it into multiple lines if needed.
+
+        Args:
+            command: command to format as string
+
+        Returns:
+            List of strings with formatted command
+        """
+
         brackets = command.count('(')
         if brackets > 2:
             return format_command_with_inner_brackets(command)

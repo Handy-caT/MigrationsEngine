@@ -4,10 +4,14 @@ from database.ddl_base.ddl_components_abstract import DDLComponent
 from database.ddl_base.ddl_composites import Composite
 from database.translator import Translator
 from migration.script.command_formatter import CommandFormatter
-from migration.script.tab_formatter import TabFormatter
+from migration.script.script_builder.tab_formatter import TabFormatter
 
 
 class TranslatorToCommand(Translator):
+    """
+    Class for translating DDLComponent to command as a List of strings
+    """
+
     def __init__(self, dialect: str = 'command'):
         super().__init__({}, dialect)
 
@@ -19,6 +23,16 @@ class TranslatorToCommand(Translator):
         return result
 
     def translate(self, component: DDLComponent) -> List[str]:
+        """
+        Translates DDLComponent to command as a List of strings
+
+        Args:
+            component: DDLComponent to translate
+
+        Returns:
+            command as a List of strings
+        """
+
         if isinstance(component, Composite):
             return self._translate_composite(component)
         else:
@@ -30,4 +44,14 @@ class TranslatorToCommand(Translator):
 
     @staticmethod
     def get_command(command: List[str]) -> str:
-        raise NotImplementedError
+        """
+        Creates a string command from multiline List of strings
+
+        Args:
+            command: multiline List of strings
+
+        Returns:
+            command as a string
+        """
+
+        return '\n'.join(command).strip()
