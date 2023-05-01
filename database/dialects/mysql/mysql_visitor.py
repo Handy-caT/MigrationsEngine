@@ -36,4 +36,3 @@ class MySqlVisitor(BaseVisitor):
 
                 node.remove_component(component)
                 node.add_component(new_component)
-
