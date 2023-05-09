@@ -1,3 +1,5 @@
+from typing import List
+
 from database.ddl_base.ddl_components_abstract import DDLComponent
 
 
@@ -11,5 +13,5 @@ class Translator:
         return self.translate_dict[component.__class__.__name__](component)
 
     @staticmethod
-    def get_command(command: list[str]) -> str:
+    def get_command(command: List[str]) -> str:
         return ' '.join(command).strip() + ';'

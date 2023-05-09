@@ -1,3 +1,5 @@
+from typing import List
+
 from database.ddl_base.ddl_components_abstract import DDLComponent
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn
 from database.ddl_base.ddl_leafs import ColumnNotNull, ColumnDefault, AddColumn, DropColumn, ColumnUnique, \
@@ -39,7 +41,7 @@ plan_dict = {
 class PlanParser:
 
     @staticmethod
-    def _parse_column_plan(column_plan: dict) -> list[DDLComponent]:
+    def _parse_column_plan(column_plan: dict) -> List[DDLComponent]:
         sub_components = []
         for key, value in column_plan.items():
             component = plan_dict[key](value)
@@ -48,7 +50,7 @@ class PlanParser:
 
         return sub_components
 
-    def _parse_column(self, column_plan: dict) -> list[DDLComponent]:
+    def _parse_column(self, column_plan: dict) -> List[DDLComponent]:
         ddl_component = []
         if column_plan['Action'] == 'Update':
             column = column_plan['Column']

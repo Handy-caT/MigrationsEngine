@@ -9,23 +9,6 @@ from database.translator import Translator
 
 
 @pytest.fixture(scope='function')
-def composite_ddl(column):
-    composite = Composite()
-
-    alter_table = AlterTable('users')
-
-    alter_column = AlterColumn(column)
-    alter_column.add_component(ColumnNotNull())
-    alter_column.add_component(ColumnDefault('xd'))
-
-    alter_table.add_component(alter_column)
-    composite.add_component(alter_table)
-    composite.add_component(ShowColumns('users'))
-
-    return composite
-
-
-@pytest.fixture(scope='function')
 def alter_table(column):
     alter_table = AlterTable('users')
 

@@ -1,5 +1,7 @@
 from copy import deepcopy
 
+from typing import List
+
 from database.abstract_interpreter import AbstractInterpreter
 from database.ddl_base.ddl_components_abstract import DDLComponent
 from database.dialects.mysql.mysql_visitor import MySqlVisitor
@@ -15,8 +17,8 @@ class MySqlInterpreter(AbstractInterpreter):
 
     def interpret(self, component: DDLComponent):
         copy = deepcopy(component)
-        command: list[str] = []
-        result: list[str] = []
+        command: List[str] = []
+        result: List[str] = []
         ind = False
         stack = []
 

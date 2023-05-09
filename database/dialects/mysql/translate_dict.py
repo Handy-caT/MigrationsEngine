@@ -5,8 +5,7 @@ from database.dialects.mysql.mysql_ddl import NotNull, Default, ModifyColumn
 def _not_null(component: NotNull) -> str:
     if component.not_null:
         return 'NOT NULL'
-    else:
-        return 'NULL'
+    return 'NULL'
 
 
 translate_dict_mysql = {

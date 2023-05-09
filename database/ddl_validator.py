@@ -1,7 +1,8 @@
 from database.ddl_base.ddl_components_abstract import DDLComponent
 from database.ddl_base.ddl_composites import AlterTable, AlterColumn, Composite
-from database.ddl_base.ddl_leafs import AddColumn, ColumnNotNull, ColumnDefault, DropColumn, ColumnUnique, \
-    AddForeignKey, DropConstraint, ShowColumns, Leaf, ColumnType, RenameColumn, RenameTable, DropTable, DropDefault
+from database.ddl_base.ddl_leafs import AddColumn, ColumnNotNull, ColumnDefault, DropColumn,\
+    ColumnUnique, AddForeignKey, DropConstraint, ShowColumns, Leaf, ColumnType, RenameColumn,\
+    RenameTable, DropTable, DropDefault
 
 _alter_column_child_list = [
     ColumnNotNull,
@@ -55,7 +56,7 @@ class DDLValidator:
         ind = False
         stack = []
 
-        iterator = component.__iter__()
+        iterator = iter(component)
         stack.append(next(iterator))
 
         for i in iterator:
@@ -65,7 +66,7 @@ class DDLValidator:
                 ind = False
 
             if not DDLValidator.can_be_child(i, stack[-1]):
-                raise ValidationException(i,stack[-1],component)
+                raise ValidationException(i, stack[-1], component)
 
             if i.is_composite:
                 stack.append(i)

@@ -44,3 +44,12 @@ class Column:
 
     def __str__(self):
         return f'{self.__class__.__name__}: {self.name} {self.column_type}'
+
+    def __eq__(self, other):
+        if not isinstance(other, Column):
+            return False
+
+        return self.name == other.name and self.column_type == other.column_type and \
+               self.not_null == other.not_null and self.key == other.key and \
+               self.default == other.default and self.extra == other.extra and \
+               self.foreign_key == other.foreign_key
